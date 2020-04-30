@@ -5,57 +5,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="stylesheet" type="text/css" href="./styles.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
 
     <title>Anthony Coda</title>
   </head>
   <body>
-    <div class="container-fluid" style="padding:0">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="navbar-brand">abcoda</div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+    <nav class="navbar navbar-expand-md navbar-light">
+      <div class="navbar-brand" id="brand">abcoda</div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item" onclick="toggleView('projects')">
-              <button type="button" class="btn btn-link">Projects</button>
-            </li>
-            <li class="nav-item" onclick="toggleView('artwork')">
-              <button type="button" class="btn btn-link">Artwork</button>
-            </li>
-            <li class="nav-item" onclick="toggleView('contact')">
-              <button type="button" class="btn btn-link">Contact</button>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item" onclick="toggleView('projects')">
+            <a id="projects-link" class="nav-link" href="#">Projects</a>
+          </li>
+          <li class="nav-item" onclick="toggleView('artwork')">
+            <a id="artwork-link" class="nav-link" href="#">Artwork</a>
+          </li>
+          <li class="nav-item" onclick="toggleView('contact')">
+            <a id="contact-link" class="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-      <div id="main" class="container-fluid">
+    <div id="main" class="container-fluid">
+      <div class="content " id="projects" style="display:none">
+        Content1
+      </div>
 
-        <div class="content " id="projects" style="display:none">
-          Content1
-        </div>
-
-        <div class="content" id="artwork">
-          <div class="album py-5 ">
-            <div class="container-fluid">
-              <div id="pictures" class="row justify-content-center">
-              </div>
-            </div>
+      <div class="content" id="artwork">
+        <div class="container-fluid">
+          <div id="pictures" class="row justify-content-center">
           </div>
         </div>
+      </div>
 
-
-        <div class="content" id="contact" style="display:none">
-          Content3
-        </div>
-
+      <div class="content" id="contact" style="display:none">
+        Content3
       </div>
     </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -85,8 +79,7 @@
       pics = document.getElementById("pictures")
       pics.innerHTML = str;
 
-
-
+      toggleView('artwork')
     }
 
     function toggleView(sectionID){
@@ -99,6 +92,18 @@
           sections[i].style.display ='none'
         }
       }
+
+      links = document.querySelectorAll(".nav-link")
+      links.forEach(function(link){
+        if (link.id == (sectionID + '-link')) {
+          document.getElementById(link.id).style.borderBottom = '1px solid black'
+          // document.getElementById(link.id).style.borderTop = '1px solid black'
+        }
+        else {
+          document.getElementById(link.id).style.borderBottom = 'none'
+          // document.getElementById(link.id).style.borderTop = 'none'
+        }
+      })
     }
   </script>
 </html>
