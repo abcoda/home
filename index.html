@@ -43,70 +43,7 @@
         <div class="content" id="artwork">
           <div class="album py-5 ">
             <div class="container-fluid">
-              <div class="row">
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div  id="mycard" class="mb-4">
-                    <img id="cardimage" src="/pearl.jpg" height="225"/>
-                    <div class="textbox">
-                      text
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="card mb-4 shadow-sm">
-                    <img id="cardimage" src="/pearl.jpg" height="225"/>
-                    <div class="card-body">
-                      <p class="card-text">Text</p>
-                      <!-- <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-muted">9 mins</small>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="card mb-4 shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                      <image xlink:href="starry.jpg" height="225" width="100%"/>
-                    </svg>
-                    <div class="card-body">
-                      <p class="card-text">Text</p>
-                      <!-- <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-muted">9 mins</small>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-sm-6">
-                  <div class="card mb-4 shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                      <image xlink:href="https://media.giphy.com/media/nRNF5nlDgr8bK/giphy.gif" height="225" width="100%"/>
-                    </svg>
-                    <div class="card-body">
-                      <p class="card-text">Text</p>
-                      <!-- <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                        </div>
-                        <small class="text-muted">9 mins</small>
-                      </div> -->
-                    </div>
-                  </div>
-                </div>
-
-
+              <div id="pictures" class="row justify-content-center">
               </div>
             </div>
           </div>
@@ -125,7 +62,32 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
+
   <script>
+
+    window.onload = function() {
+      const drawings = [
+        {"link":"pearl.jpg","text":"an old painting by another some dude"},
+        {"link":"snow.jpg","text":"text"},
+        {"link":"starry.jpg","text":"starry"},
+        {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'}
+
+      ]
+      var str = ''
+      drawings.forEach(function(drawing) {
+        str += '<div class="mycard mb-4"><img class="cardimage" src="'
+        str += drawing.link
+        str += '" height="225"/><div class="textbox">'
+        str += drawing.text
+        str += '</div></div>'
+      })
+      pics = document.getElementById("pictures")
+      pics.innerHTML = str;
+
+
+
+    }
+
     function toggleView(sectionID){
       sections = document.querySelectorAll(".content")
       for(let i = 0; i < sections.length; i++) {

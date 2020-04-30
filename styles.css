@@ -3,29 +3,38 @@ html, body{
 }
 
 #main {
-  background-color:lightblue;
+  background-color:#5b6c7f;
   padding:0px;
+}
+
+#pictures {
+  align-self:center;
+}
+
+.card-container {
+
 
 }
 
-#content {
-
+.mycard {
+  padding:3px;
+  background-color:#e1eaf4;
+  padding-top:3px;
+  border-radius:5px;
+  margin:20px;
+  margin-bottom:0;
 }
 
-#mycard {
-
-
-
-}
-
-#cardimage {
+.cardimage {
   display:block;
   margin-left: auto;
   margin-right: auto;
-  border-radius:5px;
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
 }
 
-.card {
-  /* width:200px; */
-  padding-top:3px;
+.textbox {
+  /* background-color:white; */
+  text-align:center;
+  overflow:hidden;
 }
