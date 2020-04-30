@@ -5,6 +5,7 @@ html, body{
 #main {
   background-color:#5b6c7f;
   padding:0px;
+  width:100%;
 }
 
 #pictures {
@@ -35,7 +36,7 @@ html, body{
   border-top-right-radius:5px;
   border-bottom-left-radius:2px;
   border-bottom-right-radius:2px;
-  max-width:100%;
+  max-width:95%;
 }
 
 .textbox {
