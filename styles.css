@@ -18,14 +18,14 @@ html, body{
 }
 
 .mycard {
-  padding:3px;
+  padding:4px;
   padding-bottom:50px;
   background-color:#e1eaf4;
-  padding-top:3px;
   border-radius:5px;
   margin:20px;
   margin-bottom:0;
   position:relative;
+  max-width:100%;
 }
 
 .cardimage {
@@ -36,7 +36,6 @@ html, body{
   border-top-right-radius:5px;
   border-bottom-left-radius:2px;
   border-bottom-right-radius:2px;
-  max-width:95%;
 }
 
 .textbox {
