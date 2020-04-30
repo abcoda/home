@@ -18,11 +18,13 @@ html, body{
 
 .mycard {
   padding:3px;
+  padding-bottom:50px;
   background-color:#e1eaf4;
   padding-top:3px;
   border-radius:5px;
   margin:20px;
   margin-bottom:0;
+  position:relative;
 }
 
 .cardimage {
@@ -31,10 +33,14 @@ html, body{
   margin-right: auto;
   border-top-left-radius:5px;
   border-top-right-radius:5px;
+  border-bottom-left-radius:2px;
+  border-bottom-right-radius:2px;
 }
 
 .textbox {
   /* background-color:white; */
+  position:absolute;
+  bottom:50;
+  width:100%;
   text-align:center;
-  overflow:hidden;
 }

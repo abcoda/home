@@ -3,7 +3,7 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 
     <link rel="stylesheet" type="text/css" href="./styles.css">
     <!-- Bootstrap CSS -->
@@ -67,19 +67,20 @@
 
     window.onload = function() {
       const drawings = [
-        {"link":"pearl.jpg","text":"an old painting by another some dude"},
-        {"link":"snow.jpg","text":"text"},
-        {"link":"starry.jpg","text":"starry"},
-        {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'}
-
+        {link:"snow.jpg",text:"text"},
+        {link:"starry.jpg",text:"starry"},
+        {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'},
+        {link:'desktop.png',text:"test"},
+        {link:'index.png',text:'test'},
+        {link:"pearl.jpg",text:"this is a test please dont overflow"},
       ]
       var str = ''
       drawings.forEach(function(drawing) {
         str += '<div class="mycard mb-4"><img class="cardimage" src="'
         str += drawing.link
-        str += '" height="225"/><div class="textbox">'
+        str += '" height="225"/><div class="textbox"><div>'
         str += drawing.text
-        str += '</div></div>'
+        str += '</div></div></div>'
       })
       pics = document.getElementById("pictures")
       pics.innerHTML = str;
