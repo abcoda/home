@@ -37,6 +37,22 @@
       <div class="content " id="projects" style="display:none">
         <div class="container-fluid">
           <div id="projects_container" class="row justify-content-center">
+            <div class="col-12 project-card-container" align="center">
+              <div class="shadow-sm mycard mb-4">
+                <a href="slither.gif">
+                  <img class="project-card-image" src="slither.gif"/>
+                </a>
+                <div class="textbox">
+                  <a onclick="document.getElementById('test').innerHTML='worked';sizeCard();" href="#" style="hover:hand">
+                    &#9660;
+                  </a>
+                  <div id="test">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       </div>
@@ -86,13 +102,6 @@
         str += '"><img class="cardimage" src="'
         str += drawing.link
         str += '"/></a><div class="textbox">'
-        // if (drawing.text !== undefined){
-        //   str += drawing.text
-        // }
-        // else {
-        //   str += "<br>"
-        // }
-        // str += drawing.text
         str += '</div></div>'
       })
       pics = document.getElementById("pictures")
@@ -119,7 +128,7 @@
         str += '</div></div></div>'
       })
       projs = document.getElementById("projects_container")
-      projs.innerHTML = str;
+      // projs.innerHTML = str;
 
       toggleView('projects')
       cards = document.querySelectorAll("img")
