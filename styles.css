@@ -34,41 +34,68 @@ html, body{
 
 }
 
-#content {
-}
 
-#pictures {
+
+#pictures,#projects_container {
   align-self:center;
   padding-top:20px;
+  padding-bottom:50px;
 }
 
+.project-card {
+  margin-bottom:50px;
+}
 
 .mycard {
-  padding-top:1px;
-  padding-bottom:50px;
+  padding-top:2px;
+  padding-bottom:2px;
+  /* padding-bottom:15%; */
   background-color:#e1eaf4;
   border-radius:5px;
   margin:20px;
-  margin-bottom:0;
-  position:relative;
   max-width:95%;
+  display:inline-block;
+  /* align-items:center; */
 }
 
 .cardimage {
   display:block;
   margin-left: auto;
   margin-right: auto;
+  /* padding-bottom:15%; */
   border-top-left-radius:5px;
   border-top-right-radius:5px;
   border-bottom-left-radius:2px;
   border-bottom-right-radius:2px;
-  max-width:calc(100% - 2px);
+  max-width:calc(100% - 4px);
+  max-height:calc(225px - 4px);
+}
+
+.project-card-image {
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  /* padding-bottom:15%; */
+  border-top-left-radius:5px;
+  border-top-right-radius:5px;
+  border-bottom-left-radius:2px;
+  border-bottom-right-radius:2px;
+  max-width:calc(100% - 4px);
+  max-height:calc(400px - 4px);
 }
 
 .textbox {
   /* background-color:white; */
-  position:absolute;
-  bottom:50;
-  width:100%;
+  /* position:absolute; */
+  /* bottom:50; */
+  /* width:100%; */
   text-align:center;
+  /* font-size:12px; */
+  font-size: min(4vw,12px);
+  /* min-height: min(8vw,36px); */
+  /* padding:5px; */
+  /* padding-bottom:10px; */
+  /* height:10%; */
+  /* width: fit-content; */
+  /* width:50px */
 }

@@ -35,7 +35,10 @@
 
     <div id="main" class="container-fluid">
       <div class="content " id="projects" style="display:none">
-        Content1
+        <div class="container-fluid">
+          <div id="projects_container" class="row justify-content-center">
+          </div>
+        </div>
       </div>
 
       <div class="content" id="artwork">
@@ -64,22 +67,86 @@
         {link:"snow.jpg",text:"text"},
         {link:"starry.jpg",text:"starry"},
         {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'},
-        {link:'Desktop.png',text:"test"},
+        {link:'Desktop.png'},
         {link:'index.png',text:'test'},
-        {link:"pearl.jpg",text:"this is a test please dont overflow"},
+        {link:"Outline2.jpg",text:"this is a test test test please dont overflow just typing more to get a third line"},
       ]
+
+      const projects = [
+        {link:"productivity.gif",text:"Built with React Native"},
+        {link:"slither.gif",text:"text"},
+        {link:"rolled.gif"}
+
+      ]
+
       var str = ''
       drawings.forEach(function(drawing) {
-        str += '<div class="mycard mb-4"><img class="cardimage" src="'
+        str += '<div class="shadow-sm mycard mb-4"><a href="'
         str += drawing.link
-        str += '" height="225"/><div class="textbox"><div>'
-        str += drawing.text
-        str += '</div></div></div>'
+        str += '"><img class="cardimage" src="'
+        str += drawing.link
+        str += '"/></a><div class="textbox">'
+        // if (drawing.text !== undefined){
+        //   str += drawing.text
+        // }
+        // else {
+        //   str += "<br>"
+        // }
+        // str += drawing.text
+        str += '</div></div>'
       })
       pics = document.getElementById("pictures")
       pics.innerHTML = str;
 
-      toggleView('artwork')
+
+
+
+
+      str = ''
+      projects.forEach(function(project) {
+        str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><a href="'
+        str += project.link
+        str += '"><img class="project-card-image" src="'
+        str += project.link
+        str += '"/></a><div class="textbox">'
+        if (project.text !== undefined){
+          str += project.text
+        }
+        else {
+          str += "<br>"
+        }
+        // str += project.text
+        str += '</div></div></div>'
+      })
+      projs = document.getElementById("projects_container")
+      projs.innerHTML = str;
+
+      toggleView('projects')
+      cards = document.querySelectorAll("img")
+      cards.forEach(function(card){
+        card.onload = () => {sizeText();sizeCard();}
+      })
+    }
+
+    window.onresize = () => {
+      sizeText()
+      sizeCard()
+    }
+
+    function sizeCard(){
+      cards = document.querySelectorAll(".mycard")
+      // alert(cards[0].children[0].height)
+      // alert(cards[0].children[1].offsetHeight)
+      cards.forEach(function(card){
+        card.style.height = (card.children[0].offsetHeight + 4 + card.children[1].offsetHeight) + 'px'
+      })
+    }
+    function sizeText(){
+      cards = document.querySelectorAll(".mycard")
+      cards.forEach(function(card) {
+          // console.log(card.children[0].offsetWidth)
+          card.children[1].style.width = card.children[0].offsetWidth + 'px'
+      })
     }
 
     function toggleView(sectionID){
@@ -91,6 +158,8 @@
         else {
           sections[i].style.display ='none'
         }
+        sizeText()
+        sizeCard()
       }
 
       links = document.querySelectorAll(".nav-link")
