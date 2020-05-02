@@ -80,19 +80,15 @@
       ]
 
       var str = ''
-      drawings.forEach(function(drawing) {
+      drawings.forEach(function(drawing,index) {
         str += '<div class="shadow-sm mycard mb-4"><a href="'
         str += drawing.link
         str += '"><img class="cardimage" src="'
         str += drawing.link
-        str += '"/></a><div class="textbox">'
+        str += '"/></a><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
         // if (drawing.text !== undefined){
         //   str += drawing.text
         // }
-        // else {
-        //   str += "<br>"
-        // }
-        // str += drawing.text
         str += '</div></div>'
       })
       pics = document.getElementById("pictures")
@@ -121,16 +117,34 @@
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
 
-      toggleView('projects')
-      cards = document.querySelectorAll("img")
-      cards.forEach(function(card){
-        card.onload = () => {sizeText();sizeCard();}
+      toggleView('artwork')
+      images = document.querySelectorAll("img")
+      images.forEach(function(image){
+        image.onload = () => {
+          sizeText()
+          sizeCard()
+        }
+      })
+
+      overlays = document.querySelectorAll(".overlay")
+
+      overlays.forEach(function(overlay){
+        overlay.onmouseover = () => {
+          overlay.style.opacity = 0.8
+        }
+        overlay.onmouseout = () => {
+          overlay.style.opacity = 0
+        }
       })
     }
 
     window.onresize = () => {
       sizeText()
       sizeCard()
+    }
+
+    function handleMouseOver(drawing){
+      alert()
     }
 
     function sizeCard(){
