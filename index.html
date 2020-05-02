@@ -103,7 +103,7 @@
     function createProjects(){
       var str = ''
       projects.forEach(function(project) {
-        str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><a href="'
+        str += '<div class="shadow-sm mycard mb-4"><a href="'
         str += project.link
         str += '"><img class="project-card-image" onload="sizeText();sizeCard();" src="'
         str += project.link
@@ -115,7 +115,7 @@
           str += "<br>"
         }
         // str += project.text
-        str += '</div></div></div>'
+        str += '</div></div>'
       })
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
