@@ -81,11 +81,9 @@
 
       var str = ''
       drawings.forEach(function(drawing,index) {
-        str += '<div class="shadow-sm mycard mb-4"><a href="'
+        str += '<div class="shadow-sm mycard mb-4"><img class="cardimage" src="'
         str += drawing.link
-        str += '"><img class="cardimage" src="'
-        str += drawing.link
-        str += '"/></a><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
+        str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
         // if (drawing.text !== undefined){
         //   str += drawing.text
         // }
@@ -123,6 +121,7 @@
         image.onload = () => {
           sizeText()
           sizeCard()
+
         }
       })
 
@@ -130,6 +129,9 @@
 
       overlays.forEach(function(overlay){
         overlay.onmouseover = () => {
+          overlay.style.opacity = 0.8
+        }
+        overlay.onclick = () => {
           overlay.style.opacity = 0.8
         }
         overlay.onmouseout = () => {
