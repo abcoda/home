@@ -87,7 +87,7 @@
 
     function createDrawings(){
       var str = ''
-      drawings.forEach(function(drawing,index) {
+      drawings.forEach(function(drawing) {
         str += '<div class="shadow-sm mycard mb-4"><img class="cardimage" onload="sizeText();sizeCard();" src="'
         str += drawing.link
         str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
@@ -103,19 +103,17 @@
     function createProjects(){
       var str = ''
       projects.forEach(function(project) {
-        str += '<div class="shadow-sm mycard mb-4"><a href="'
+        str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><img class="project-card-image" onload="sizeText();sizeCard();" src="'
         str += project.link
-        str += '"><img class="project-card-image" onload="sizeText();sizeCard();" src="'
-        str += project.link
-        str += '"/></a><div class="textbox">'
-        if (project.text !== undefined){
-          str += project.text
-        }
-        else {
-          str += "<br>"
-        }
+        str += '"/><div class="textbox">'
+        // if (project.text !== undefined){
+        //   str += project.text
+        // }
+        // else {
+        //   str += "<br>"
+        // }
         // str += project.text
-        str += '</div></div>'
+        str += '</div></div></div>'
       })
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
@@ -193,7 +191,7 @@
     ]
 
     const projects = [
-      {link:"productivity.gif",text:"Built withReact Native"},
+      {link:"productivity.gif",text:"Built with React Native"},
       {link:"slither.gif",text:"text"},
       {link:"rolled.gif"}
     ]
