@@ -115,7 +115,7 @@
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
 
-      toggleView('artwork')
+      toggleView('projects')
       images = document.querySelectorAll("img")
       images.forEach(function(image){
         image.onload = () => {
@@ -134,6 +134,9 @@
         overlay.onclick = () => {
           overlay.style.opacity = 0.8
         }
+        // overlay.onfocusout = () => {
+        //   overlay.style.opacity = 0
+        // }
         overlay.onmouseout = () => {
           overlay.style.opacity = 0
         }
