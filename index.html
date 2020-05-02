@@ -20,14 +20,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item" onclick="toggleView('projects')">
-            <a id="projects-link" class="nav-link" href="#">Projects</a>
+          <li id="projects-link" class="nav-item" onclick="toggleView('projects')">
+            <a  class="nav-link" href="#">Projects</a>
           </li>
-          <li class="nav-item" onclick="toggleView('artwork')">
-            <a id="artwork-link" class="nav-link" href="#">Artwork</a>
+          <li id="artwork-link" class="nav-item" onclick="toggleView('artwork')">
+            <a  class="nav-link" href="#">Artwork</a>
           </li>
-          <li class="nav-item" onclick="toggleView('contact')">
-            <a id="contact-link" class="nav-link" href="#">Contact</a>
+          <li id="contact-link" class="nav-item" onclick="toggleView('contact')">
+            <a class="nav-link" href="#">Contact</a>
           </li>
         </ul>
       </div>
@@ -69,13 +69,7 @@
       createProjects();
 
       toggleView('projects')
-      // images = document.querySelectorAll("img")
-      // images.forEach(function(image){
-      //   image.onload = () => {
-      //     sizeText()
-      //     sizeCard()
-      //   }
-      // })
+
 
       createOverlays();
     }
@@ -121,8 +115,6 @@
 
     function sizeCard(){
       cards = document.querySelectorAll(".mycard")
-      // alert(cards[0].children[0].height)
-      // alert(cards[0].children[1].offsetHeight)
       cards.forEach(function(card){
         card.style.height = (card.children[0].offsetHeight + 4 + card.children[1].offsetHeight) + 'px'
       })
@@ -168,14 +160,14 @@
         sizeCard()
       }
 
-      links = document.querySelectorAll(".nav-link")
+      links = document.querySelectorAll(".nav-item")
       links.forEach(function(link){
         if (link.id == (sectionID + '-link')) {
-          document.getElementById(link.id).style.borderBottom = '1px solid black'
-          // document.getElementById(link.id).style.borderTop = '1px solid black'
+          document.getElementById(link.id).style.textDecoration = 'underline'
+          document.getElementById(link.id).children[0].style.opacity = 1
         }
         else {
-          document.getElementById(link.id).style.borderBottom = 'none'
+          document.getElementById(link.id).style.textDecoration = 'none'
           // document.getElementById(link.id).style.borderTop = 'none'
         }
       })
