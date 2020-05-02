@@ -63,25 +63,32 @@
   <script>
 
     window.onload = function() {
-      const drawings = [
-        {link:"snow.jpg",text:"text"},
-        {link:"starry.jpg",text:"starry"},
-        {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'},
-        {link:'Desktop.png'},
-        {link:'index.png',text:'test'},
-        {link:"Outline2.jpg",text:"this is a test test test please dont overflow just typing more to get a third line"},
-      ]
 
-      const projects = [
-        {link:"productivity.gif",text:"Built with React Native"},
-        {link:"slither.gif",text:"text"},
-        {link:"rolled.gif"}
+      createDrawings();
 
-      ]
+      createProjects();
 
+      toggleView('projects')
+      // images = document.querySelectorAll("img")
+      // images.forEach(function(image){
+      //   image.onload = () => {
+      //     sizeText()
+      //     sizeCard()
+      //   }
+      // })
+
+      createOverlays();
+    }
+
+    window.onresize = () => {
+      sizeText()
+      sizeCard()
+    }
+
+    function createDrawings(){
       var str = ''
       drawings.forEach(function(drawing,index) {
-        str += '<div class="shadow-sm mycard mb-4"><img class="cardimage" src="'
+        str += '<div class="shadow-sm mycard mb-4"><img class="cardimage" onload="sizeText();sizeCard();" src="'
         str += drawing.link
         str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
         // if (drawing.text !== undefined){
@@ -91,12 +98,10 @@
       })
       pics = document.getElementById("pictures")
       pics.innerHTML = str;
+    }
 
-
-
-
-
-      str = ''
+    function createProjects(){
+      var str = ''
       projects.forEach(function(project) {
         str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><a href="'
         str += project.link
@@ -114,16 +119,26 @@
       })
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
+    }
 
-      toggleView('projects')
-      images = document.querySelectorAll("img")
-      images.forEach(function(image){
-        image.onload = () => {
-          sizeText()
-          sizeCard()
-        }
+    function sizeCard(){
+      cards = document.querySelectorAll(".mycard")
+      // alert(cards[0].children[0].height)
+      // alert(cards[0].children[1].offsetHeight)
+      cards.forEach(function(card){
+        card.style.height = (card.children[0].offsetHeight + 4 + card.children[1].offsetHeight) + 'px'
       })
+    }
 
+    function sizeText(){
+      cards = document.querySelectorAll(".mycard")
+      cards.forEach(function(card) {
+          // console.log(card.children[0].offsetWidth)
+          card.children[1].style.width = card.children[0].offsetWidth + 'px'
+      })
+    }
+
+    function createOverlays(){
       overlays = document.querySelectorAll(".overlay")
 
       overlays.forEach(function(overlay){
@@ -139,31 +154,6 @@
         overlay.onmouseout = () => {
           overlay.style.opacity = 0
         }
-      })
-    }
-
-    window.onresize = () => {
-      sizeText()
-      sizeCard()
-    }
-
-    function handleMouseOver(drawing){
-      alert()
-    }
-
-    function sizeCard(){
-      cards = document.querySelectorAll(".mycard")
-      // alert(cards[0].children[0].height)
-      // alert(cards[0].children[1].offsetHeight)
-      cards.forEach(function(card){
-        card.style.height = (card.children[0].offsetHeight + 4 + card.children[1].offsetHeight) + 'px'
-      })
-    }
-    function sizeText(){
-      cards = document.querySelectorAll(".mycard")
-      cards.forEach(function(card) {
-          // console.log(card.children[0].offsetWidth)
-          card.children[1].style.width = card.children[0].offsetWidth + 'px'
       })
     }
 
@@ -192,5 +182,20 @@
         }
       })
     }
+
+    const drawings = [
+      {link:"snow.jpg",text:"text"},
+      {link:"starry.jpg",text:"starry"},
+      {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'},
+      {link:'Desktop.png'},
+      {link:'index.png',text:'test'},
+      {link:"Outline2.jpg",text:"this is a test test test please dont overflow just typing more to get a third line"},
+    ]
+
+    const projects = [
+      {link:"productivity.gif",text:"Built with React Native"},
+      {link:"slither.gif",text:"text"},
+      {link:"rolled.gif"}
+    ]
   </script>
 </html>
