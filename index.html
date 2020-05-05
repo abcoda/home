@@ -20,14 +20,14 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li id="projects-link" class="nav-item" onclick="toggleView('projects')">
-            <a  class="nav-link" href="#">Projects</a>
+          <li class="nav-item" onclick="toggleView('projects')">
+            <a id="projects-link" class="nav-link" href="#">Projects</a>
           </li>
-          <li id="artwork-link" class="nav-item" onclick="toggleView('artwork')">
-            <a  class="nav-link" href="#">Artwork</a>
+          <li class="nav-item" onclick="toggleView('artwork')">
+            <a id="artwork-link" class="nav-link" href="#">Artwork</a>
           </li>
-          <li id="contact-link" class="nav-item" onclick="toggleView('contact')">
-            <a class="nav-link" href="#">Contact</a>
+          <li class="nav-item" onclick="toggleView('contact')">
+            <a id="contact-link" class="nav-link" href="#">Contact</a>
           </li>
         </ul>
       </div>
@@ -43,6 +43,7 @@
 
       <div class="content" id="artwork">
         <div class="container-fluid">
+
           <div id="pictures" class="row justify-content-center">
           </div>
         </div>
@@ -75,20 +76,34 @@
     }
 
     window.onresize = () => {
-      sizeText()
-      sizeCard()
+      // sizeText()
+      // sizeCards()
     }
 
     function createDrawings(){
       var str = ''
       drawings.forEach(function(drawing) {
-        str += '<div class="shadow-sm mycard mb-4"><img class="cardimage" onload="sizeText();sizeCard();" src="'
-        str += drawing.link
-        str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">Test</div></div>'
-        // if (drawing.text !== undefined){
-        //   str += drawing.text
-        // }
-        str += '</div></div>'
+        str += '<div class="shadow-lg mycard mb-4">'
+        if (drawing.video) {
+          str += '<video class="cardimage"  height="224" width="224" controls autoplay loop><source src="./artwork/'
+          str += drawing.link
+          str += '" type="video/mp4"></video>'
+        }
+        else {
+          str += '<img class="cardimage" src="./artwork/'
+          str += drawing.link
+          str += '"/>'
+          str += '<div class="textbox"><div class="overlay"><div class="overlay-text">'
+          str += drawing.title
+          str += '<br>'
+          str += drawing.medium
+          str += '<br>'
+          if (drawing.info !== undefined){
+            str += drawing.info
+          }
+          str += '</div></div></div>'
+        }
+        str += '</div>'
       })
       pics = document.getElementById("pictures")
       pics.innerHTML = str;
@@ -97,26 +112,23 @@
     function createProjects(){
       var str = ''
       projects.forEach(function(project) {
-        str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><img class="project-card-image" onload="sizeText();sizeCard();" src="'
+        str += '<div class="col-12 project-card" align="center"><div class="shadow-sm mycard mb-4"><img class="project-card-image" src="./projects/'
         str += project.link
-        str += '"/><div class="textbox">'
-        // if (project.text !== undefined){
-        //   str += project.text
-        // }
-        // else {
-        //   str += "<br>"
-        // }
-        // str += project.text
-        str += '</div></div></div>'
+        str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">'
+        str += project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>'
+
+        str += '</div></div></div></div></div>'
       })
       projs = document.getElementById("projects_container")
       projs.innerHTML = str;
     }
 
-    function sizeCard(){
+    function sizeCards(){
+      // image.parentElement.style.height = (image.offsetHeight + 4) + 'px'
+      // alert(this)
       cards = document.querySelectorAll(".mycard")
       cards.forEach(function(card){
-        card.style.height = (card.children[0].offsetHeight + 4 + card.children[1].offsetHeight) + 'px'
+        card.style.height = (card.children[0].offsetHeight + 4) + 'px'
       })
     }
 
@@ -133,10 +145,10 @@
 
       overlays.forEach(function(overlay){
         overlay.onmouseover = () => {
-          overlay.style.opacity = 0.8
+          overlay.style.opacity = 0.9
         }
         overlay.onclick = () => {
-          overlay.style.opacity = 0.8
+          overlay.style.opacity = 0.9
         }
         // overlay.onfocusout = () => {
         //   overlay.style.opacity = 0
@@ -156,15 +168,15 @@
         else {
           sections[i].style.display ='none'
         }
-        sizeText()
-        sizeCard()
+        // sizeText()
+        // sizeCards()
       }
 
-      links = document.querySelectorAll(".nav-item")
+      links = document.querySelectorAll(".nav-link")
       links.forEach(function(link){
         if (link.id == (sectionID + '-link')) {
           document.getElementById(link.id).style.textDecoration = 'underline'
-          document.getElementById(link.id).children[0].style.opacity = 1
+          // document.getElementById(link.id).children[0].style.opacity = 1
         }
         else {
           document.getElementById(link.id).style.textDecoration = 'none'
@@ -174,18 +186,16 @@
     }
 
     const drawings = [
-      {link:"snow.jpg",text:"text"},
-      {link:"starry.jpg",text:"starry"},
-      {link:'https://media.giphy.com/media/3o85xtk0zf2Vvpuy1W/giphy.gif',text:'test'},
-      {link:'Desktop.png'},
-      {link:'index.png',text:'test'},
-      {link:"Outline2.jpg",text:"this is a test test test please dont overflow just typing more to get a third line"},
+      {link:"einstein_vid.m4v", video:true},
+      {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
+      {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
     ]
 
     const projects = [
-      {link:"productivity.gif",text:"Built with React Native"},
-      {link:"slither.gif",text:"text"},
-      {link:"rolled.gif"}
+      {link:"productivity.gif", title:'"Productivity"', github:"https://github.com/abcoda/product", text:"Built with React Native"},
+      {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", text:"text"},
+      {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto"}
     ]
   </script>
 </html>
