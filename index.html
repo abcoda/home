@@ -154,6 +154,9 @@
       overlays.forEach(function(overlay){
         parent = overlay.parentElement
         media = parent.children[0]
+        media.onclick = () => {
+          alert()
+        }
         media.onmouseover = overlay.onmouseover = () => {
           overlay.style.opacity = 0.9
           overlay.children[0].style.visibility = "visible"
