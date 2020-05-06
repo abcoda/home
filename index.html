@@ -105,7 +105,6 @@
       createDrawings();
       createProjects();
       turnOnOverlays();
-
     }
 
     function createDrawings(){
@@ -114,7 +113,7 @@
       drawings.forEach(function(drawing) {
         str += '<div class="shadow-lg my-card mb-4">'
         if (drawing.video) {
-          str += '<video class="artwork-card-contents" controls '
+          str += '<video class="artwork-card-contents" onclick="this.paused ? this.play() : this.pause();" '
           if (firstVideo) {
             str += 'autoplay '
             firstVideo = false
@@ -161,6 +160,10 @@
         }
       })
     }
+
+    // function setControls(video){
+    //   video.onclick = video.play()
+    // }
 
     function toggleView(sectionID){
       sections = document.querySelectorAll(".content")
