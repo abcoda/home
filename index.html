@@ -119,22 +119,17 @@
             firstVideo = false
           }
           str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
-          str += '<div class="overlay"><div class="overlay-text">'
-          str += drawing.link + '<br>'
-          if (drawing.info !== undefined){
-            str += drawing.info
-          }
-          str += '</div></div>'
+          str += '<div class="overlay-video"><div class="overlay-text">'
         }
         else {
           str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
           str += '<div class="overlay"><div class="overlay-text">'
-          str += drawing.title + '<br>' + drawing.medium + '<br>'
-          if (drawing.info !== undefined){
-            str += drawing.info
-          }
-          str += '</div></div>'
         }
+        str += drawing.title + '<br>' + drawing.medium + '<br>'
+        if (drawing.info !== undefined){
+          str += drawing.info
+        }
+        str += '</div></div>'
         str += '</div>'
       })
       pics = document.getElementById("artwork-container")
@@ -153,21 +148,8 @@
     }
 
     function turnOnOverlays(){
-      // images = document.querySelectorAll("img")
-      // images.forEach(function(image){
-      //   overlay = image.parentElement.children[1]
-      //   image.onmouseover = () => {
-      //     alert(typeof image.parentElement)
-      //     overlay.style.opacity = 0.95
-      //     overlay.children[0].style.visibility = "visible"
-      //   }
-      //   image.onmouseout = () => {
-      //     overlay.style.opacity = 0
-      //     overlay.children[0].style.visibility = "hidden"
-      //   }
-      // })
-
       overlays = document.querySelectorAll(".overlay")
+      videoOverlays = document.querySelectorAll(".overlay-video")
 
       overlays.forEach(function(overlay){
         parent = overlay.parentElement
@@ -182,23 +164,34 @@
         }
       })
 
-      // overlays = document.querySelectorAll(".overlay")
-      //
-      // overlays.forEach(function(overlay){
-      //   overlay.onmouseover = () => {
-      //     overlay.style.opacity = 0.95
-      //     overlay.children[0].style.visibility = "visible"
-      //   }
-      //   overlay.onmouseout = () => {
-      //     overlay.style.opacity = 0
-      //     overlay.children[0].style.visibility = "hidden"
-      //   }
-      // })
+      videoOverlays.forEach(function(overlay){
+        parent = overlay.parentElement
+        media = parent.children[0]
+        media.onmouseover = overlay.onmouseover = () => {
+          overlay.style.opacity = 0.9
+          overlay.children[0].style.visibility = "visible"
+        }
+        media.onmouseout = overlay.onmouseout = () => {
+          overlay.style.opacity = 0
+          overlay.children[0].style.visibility = "hidden"
+        }
+        media.onclick = () => {
+          if (overlay.style.opacity == 0.9) {
+            overlay.style.opacity = 0
+            overlay.children[0].style.visibility = "hidden"
+          }
+          else {
+            overlay.style.opacity = 0.9
+            overlay.children[0].style.visibility = "visible"
+          }
+        }
+        // if (media.paused) {
+        //   overlay.style.opacity = 0.9
+        //   overlay.children[0].style.visibility = "visible"
+        // }
+      })
     }
 
-    // function setControls(video){
-    //   video.onclick = video.play()
-    // }
 
     function toggleView(sectionID){
       sections = document.querySelectorAll(".content")
@@ -225,16 +218,16 @@
     const drawings = [
       {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
 
-      {link:"einstein_vid.m4v", video:true},
-      {link:"chance_vid.m4v", video:true},
-      {link:"kendrick_salt.m4v", video:true},
-      {link:"lana0.m4v", video:true},
-      {link:"pablo.m4v", video:true},
-      {link:"kendrick.m4v", video:true},
-      {link:"dan_vid.m4v", video:true},
-      {link:"jack_white.m4v", video:true},
-      {link:"regina.m4v", video:true},
-      {link:"weeknd.m4v", video:true},
+      {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", video:true},
+      // {link:"chance_vid.m4v", video:true},
+      // {link:"kendrick_salt.m4v", video:true},
+      // {link:"lana0.m4v", video:true},
+      // {link:"pablo.m4v", video:true},
+      // {link:"kendrick.m4v", video:true},
+      // {link:"dan_vid.m4v", video:true},
+      // {link:"jack_white.m4v", video:true},
+      // {link:"regina.m4v", video:true},
+      // {link:"weeknd.m4v", video:true},
 
       {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
       {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
