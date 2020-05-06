@@ -103,18 +103,12 @@
   </body>
 
   <script>
-
     window.onload = function() {
       createDrawings();
       createProjects();
       turnOnOverlays();
       toggleView('projects')
     }
-
-    // window.onresize = () => {
-    //   // sizeText()
-    //   // sizeCards()
-    // }
 
     function createDrawings(){
       var str = ''
@@ -176,20 +170,22 @@
       overlays.forEach(function(overlay){
         overlay.onmouseover = () => {
           overlay.style.opacity = 0.95
+          overlay.children[0].style.display = "table-cell"
         }
-        // overlay.onclick = () => {
-        //   if (overlay.style.opacity === 0) {
-        //     overlay.style.opacity = 0.95
-        //   }
-        //   else {
-        //     overlay.style.opacity = 0
-        //   }
-        // }
-        // overlay.onfocusout = () => {
-        //   overlay.style.opacity = 0
-        // }
         overlay.onmouseout = () => {
           overlay.style.opacity = 0
+          overlay.children[0].style.display = "none"
+        }
+        overlay.onclick = () => {
+          // alert()
+          if (overlay.style.opacity == 0) {
+            overlay.style.opacity = 0.95
+            overlay.children[0].style.display = "table-cell"
+          }
+          else {
+            overlay.style.opacity = 0
+            overlay.children[0].style.display = "none"
+          }
         }
       })
     }
