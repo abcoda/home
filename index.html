@@ -119,7 +119,7 @@
             firstVideo = false
           }
           str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
-          str += '<div class="overlay-video"><div class="overlay-text">'
+          str += '<div class="overlay" style="height:30%"><div class="overlay-text">'
         }
         else {
           str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
@@ -149,13 +149,13 @@
 
     function turnOnOverlays(){
       overlays = document.querySelectorAll(".overlay")
-      videoOverlays = document.querySelectorAll(".overlay-video")
+      // videoOverlays = document.querySelectorAll(".overlay-video")ov
 
       overlays.forEach(function(overlay){
         parent = overlay.parentElement
         media = parent.children[0]
         media.onclick = () => {
-          alert()
+
         }
         media.onmouseover = overlay.onmouseover = () => {
           overlay.style.opacity = 0.9
@@ -167,32 +167,28 @@
         }
       })
 
-      videoOverlays.forEach(function(overlay){
-        parent = overlay.parentElement
-        media = parent.children[0]
-        media.onmouseover = overlay.onmouseover = () => {
-          overlay.style.opacity = 0.9
-          overlay.children[0].style.visibility = "visible"
-        }
-        media.onmouseout = overlay.onmouseout = () => {
-          overlay.style.opacity = 0
-          overlay.children[0].style.visibility = "hidden"
-        }
-        media.onclick = () => {
-          if (overlay.style.opacity == 0.9) {
-            overlay.style.opacity = 0
-            overlay.children[0].style.visibility = "hidden"
-          }
-          else {
-            overlay.style.opacity = 0.9
-            overlay.children[0].style.visibility = "visible"
-          }
-        }
-        // if (media.paused) {
-        //   overlay.style.opacity = 0.9
-        //   overlay.children[0].style.visibility = "visible"
-        // }
-      })
+      // videoOverlays.forEach(function(videoverlay){
+      //   parent = overlay.parentElement
+      //   media = parent.children[0]
+      //   media.onmouseover = overlay.onmouseover = () => {
+      //     overlay.style.opacity = 0.9
+      //     overlay.children[0].style.visibility = "visible"
+      //   }
+      //   media.onmouseout = overlay.onmouseout = () => {
+      //     overlay.style.opacity = 0
+      //     overlay.children[0].style.visibility = "hidden"
+      //   }
+      //   media.onclick = () => {
+      //     if (overlay.style.opacity == 0.9) {
+      //       overlay.style.opacity = 0
+      //       overlay.children[0].style.visibility = "hidden"
+      //     }
+      //     else {
+      //       overlay.style.opacity = 0.9
+      //       overlay.children[0].style.visibility = "visible"
+      //     }
+      //   }
+      // })
     }
 
 
