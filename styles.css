@@ -37,12 +37,13 @@ html, body{
 /* Unsized, grows to fit contents while maintaining border */
 .my-card {
   background-color:#e1eaf4;
-  border-radius:5px;
+  border-radius:4px;
   margin:20px;
   max-width:95%;
-  /* display:inline-block; */
+  display:inline-block;
   position:relative;
   padding:2px;
+  max-height:228px;
 
   /* display:flex;
   align-items:center;
@@ -61,10 +62,12 @@ html, body{
 
 
 .artwork-card-contents,.project-card-contents {
-  display:block;
-  margin:auto;
+  /* display:block; */
+  /* margin:auto; */
   max-width:100%;
-  border-radius:5px;
+  border-radius:4px;
+  /* border-bottom-left-radius:5px; */
+  /* border-bottom-right-radius:5px; */
 }
 
 .artwork-card-contents {
@@ -85,20 +88,44 @@ html, body{
   padding:20px
 }
 
-.overlay {
-  border-radius:4px;
+.overlay-toggler{
+  padding: 5px;
+  text-align: center;
+  background-color:white;
+  opacity:0.5;
+  /* border-radius:4px; */
+  border-bottom-left-radius:4px;
+  border-bottom-right-radius:4px;
   position:absolute;
-  top:0px;
+  /* top:0px; */
   left:0px;
-  width:100%;
-  height:100%;
-  opacity:0;
-  background:#e1eaf4;
-  border: 2px solid white;
+  bottom:0px;
+  width:calc(100%);
+  height:7%;
+}
 
-  display:flex;
+.overlay {
+  /* border-top-left-radius:4px; */
+  /* border-top-right-radius:4px; */
+  border-radius:4px;
+  /* position:absolute; */
+  /* top:0px; */
+  /* left:0px; */
+  width:100%;
+  height:0px;
+  overflow:hidden;
+  opacity:0.85;
+  position:absolute;
+  top:0;
+  left:0px;
+  background:white;
+  /* border: 2px solid white; */
+  /* display:none; */
+  /* display:flex;
   align-items:center;
-  justify-content:center;
+  justify-content:center; */
+  font-size: min(4vw,12px);
+  text-align: center;
 
 }
 

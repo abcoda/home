@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script>
+      $(document).ready(function(){
+        $(".overlay-toggler").click(function(){
+          $(".overlay").slideDown("slow");
+        });
+      });
+    </script> -->
+
     <title>Anthony Coda</title>
   </head>
   <body>
@@ -62,7 +71,7 @@
                   <span class="sr-only">Next</span>
                 </a>
               </div>
-              <div class="overlay"><div class="overlay-text">fauxBear<br>View on <a href="#">GitHub</a><br></div></div>
+              <!-- <div class="overlay"><div class="overlay-text">fauxBear<br>View on <a href="#">GitHub</a><br></div></div> -->
             </div>
           </div>
         </div>
@@ -71,6 +80,22 @@
       <div class="content" id="artwork">
         <div class="container-fluid">
           <div id="artwork-container" class="row justify-content-center">
+            <div class="my-card">
+              <div class="overlay">ffffffff</div>
+              <img class="artwork-card-contents" src="./artwork/index.png"/>
+              <!-- <div class="overlay-toggler"></div> -->
+            </div>
+            <div class="my-card">
+              <div class="overlay">ffffffff</div>
+              <img class="artwork-card-contents" src="./artwork/Outline2.jpg"/>
+              <!-- <div class="overlay-toggler"></div> -->
+            </div>
+            <div class="my-card">
+              <div class="overlay">ffffffff</div>
+              <video controls class="artwork-card-contents" src="./artwork/vids/einstein_vid.mkv"/>
+              <!-- <div class="overlay-toggler"></div> -->
+            </div>
+
           </div>
         </div>
       </div>
@@ -94,7 +119,8 @@
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
@@ -102,16 +128,22 @@
   <script>
     window.onload = function() {
       toggleView('artwork')
-      createDrawings();
-      createProjects();
-      turnOnOverlays();
+      // createDrawings();
+      // createProjects();
+      // turnOnOverlays();
+      $(".artwork-card-contents").hover(function(){
+        $(this.parentElement.children[0]).animate({height:"100%"},"400")
+      });
+      $(".artwork-card-contents").mouseleave(function(){
+        $(this.parentElement.children[0]).animate({height:"0"},"400")
+      });
     }
 
     function createDrawings(){
       var str = ''
       firstVideo = true;
       drawings.forEach(function(drawing) {
-        str += '<div class="shadow-lg my-card mb-4">'
+        str += '<div class="shadow-lg my-card mb-4"><div class="overlay"></div><div class="overlay-toggler"></div>'
         if (drawing.video) {
           str += '<video class="artwork-card-contents" controls playsinline="true" '
           if (firstVideo) {
@@ -119,17 +151,17 @@
             firstVideo = false
           }
           str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
-          str += '<div class="overlay" style="height:30%"><div class="overlay-text">'
+          // str += '<div class="overlay" style="height:30%"><div class="overlay-text">'
         }
         else {
           str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
-          str += '<div class="overlay"><div class="overlay-text">'
+          // str += '<div class="overlay"><div class="overlay-text">'
         }
-        str += drawing.title + '<br>' + drawing.medium + '<br>'
-        if (drawing.info !== undefined){
-          str += drawing.info
-        }
-        str += '</div></div>'
+        // str += drawing.title + '<br>' + drawing.medium + '<br>'
+        // if (drawing.info !== undefined){
+          // str += drawing.info
+        // }
+        // str += '</div></div>'
         str += '</div>'
       })
       pics = document.getElementById("artwork-container")
@@ -140,36 +172,26 @@
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
         str += '<div class="shadow-sm my-card project-card mb-4"><img class="project-card-contents" src="./projects/' + project.link + '"/><div class="textbox">'
-        str += '<div class="overlay"><div class="overlay-text">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
-        str += '</div></div>'
+        // str += '<div class="overlay"><div class="overlay-text">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+        // str += '</div></div>'
       })
       projs = document.getElementById("projects-container")
       projs.innerHTML = str;
     }
 
     function turnOnOverlays(){
-      overlays = document.querySelectorAll(".overlay")
-      // videoOverlays = document.querySelectorAll(".overlay-video")ov
-
-      overlays.forEach(function(overlay){
-        parent = overlay.parentElement
-        media = parent.children[0]
-        media.onclick = () => {
-
-        }
-        media.onmouseover = overlay.onmouseover = () => {
-          overlay.style.opacity = 0.9
-          overlay.children[0].style.visibility = "visible"
-        }
-        media.onmouseout = overlay.onmouseout = () => {
-          overlay.style.opacity = 0
-          overlay.children[0].style.visibility = "hidden"
-        }
-      })
-
-      // videoOverlays.forEach(function(videoverlay){
+      // $(".overlay-toggler").click(function(){
+      //   $(".overlay").slideDown("slow");
+      // });
+      // overlays = document.querySelectorAll(".overlay")
+      // // videoOverlays = document.querySelectorAll(".overlay-video")ov
+      //
+      // overlays.forEach(function(overlay){
       //   parent = overlay.parentElement
       //   media = parent.children[0]
+      //   media.onclick = () => {
+      //
+      //   }
       //   media.onmouseover = overlay.onmouseover = () => {
       //     overlay.style.opacity = 0.9
       //     overlay.children[0].style.visibility = "visible"
@@ -177,16 +199,6 @@
       //   media.onmouseout = overlay.onmouseout = () => {
       //     overlay.style.opacity = 0
       //     overlay.children[0].style.visibility = "hidden"
-      //   }
-      //   media.onclick = () => {
-      //     if (overlay.style.opacity == 0.9) {
-      //       overlay.style.opacity = 0
-      //       overlay.children[0].style.visibility = "hidden"
-      //     }
-      //     else {
-      //       overlay.style.opacity = 0.9
-      //       overlay.children[0].style.visibility = "visible"
-      //     }
       //   }
       // })
     }
@@ -217,7 +229,7 @@
     const drawings = [
       {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
 
-      {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"Wite charcoal", video:true},
+      // {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", video:true},
       // {link:"chance_vid.m4v", video:true},
       // {link:"kendrick_salt.m4v", video:true},
       // {link:"lana0.m4v", video:true},
@@ -228,10 +240,10 @@
       // {link:"regina.m4v", video:true},
       // {link:"weeknd.m4v", video:true},
 
-      {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
-      {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
-      {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
-      {link:"small.png",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
+      // {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
+      // {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      // {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
+      // {link:"small.png",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
 
     ]
 
