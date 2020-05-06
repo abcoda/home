@@ -169,22 +169,24 @@
 
       overlays.forEach(function(overlay){
         overlay.onmouseover = () => {
+          // overlay.style.visibility = "visible"
           overlay.style.opacity = 0.95
-          overlay.children[0].style.display = "table-cell"
+          // overlay.children[0].style.display = "table-cell"
         }
         overlay.onmouseout = () => {
+          // overlay.style.visibility = "hidden"
           overlay.style.opacity = 0
-          overlay.children[0].style.display = "none"
+          // overlay.children[0].style.display = "none"
         }
         overlay.onclick = () => {
           // alert()
           if (overlay.style.opacity == 0) {
             overlay.style.opacity = 0.95
-            overlay.children[0].style.display = "table-cell"
+            // overlay.children[0].style.display = "table-cell"
           }
           else {
             overlay.style.opacity = 0
-            overlay.children[0].style.display = "none"
+            // overlay.children[0].style.display = "none"
           }
         }
       })

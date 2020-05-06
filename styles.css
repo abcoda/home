@@ -93,11 +93,12 @@ html, body{
   opacity:0;
   padding:10px;
   display:table;
+  /* visibility:hidden; */
 }
 
 .overlay-text {
   vertical-align:middle;
-  display:none;
+  display:table-cell;
   background:#e1eaf4;
   border-radius:5px;
   width:100%;
