@@ -113,12 +113,18 @@
       drawings.forEach(function(drawing) {
         str += '<div class="shadow-lg my-card mb-4">'
         if (drawing.video) {
-          str += '<video class="artwork-card-contents" onclick="this.paused ? this.play() : this.pause();" '
+          str += '<video class="artwork-card-contents" controls playsinline="true" '
           if (firstVideo) {
             str += 'autoplay '
             firstVideo = false
           }
           str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
+          str += '<div class="overlay"><div class="overlay-text">'
+          str += drawing.link + '<br>'
+          if (drawing.info !== undefined){
+            str += drawing.info
+          }
+          str += '</div></div>'
         }
         else {
           str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
@@ -147,18 +153,47 @@
     }
 
     function turnOnOverlays(){
+      // images = document.querySelectorAll("img")
+      // images.forEach(function(image){
+      //   overlay = image.parentElement.children[1]
+      //   image.onmouseover = () => {
+      //     alert(typeof image.parentElement)
+      //     overlay.style.opacity = 0.95
+      //     overlay.children[0].style.visibility = "visible"
+      //   }
+      //   image.onmouseout = () => {
+      //     overlay.style.opacity = 0
+      //     overlay.children[0].style.visibility = "hidden"
+      //   }
+      // })
+
       overlays = document.querySelectorAll(".overlay")
 
       overlays.forEach(function(overlay){
-        overlay.onmouseover = () => {
-          overlay.style.opacity = 0.95
+        parent = overlay.parentElement
+        media = parent.children[0]
+        media.onmouseover = overlay.onmouseover = () => {
+          overlay.style.opacity = 0.9
           overlay.children[0].style.visibility = "visible"
         }
-        overlay.onmouseout = () => {
+        media.onmouseout = overlay.onmouseout = () => {
           overlay.style.opacity = 0
           overlay.children[0].style.visibility = "hidden"
         }
       })
+
+      // overlays = document.querySelectorAll(".overlay")
+      //
+      // overlays.forEach(function(overlay){
+      //   overlay.onmouseover = () => {
+      //     overlay.style.opacity = 0.95
+      //     overlay.children[0].style.visibility = "visible"
+      //   }
+      //   overlay.onmouseout = () => {
+      //     overlay.style.opacity = 0
+      //     overlay.children[0].style.visibility = "hidden"
+      //   }
+      // })
     }
 
     // function setControls(video){

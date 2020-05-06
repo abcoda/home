@@ -40,9 +40,13 @@ html, body{
   border-radius:5px;
   margin:20px;
   max-width:95%;
-  display:inline-block;
+  /* display:inline-block; */
   position:relative;
   padding:2px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .project-card {
@@ -87,17 +91,19 @@ html, body{
   top:0px;
   left:0px;
   width:100%;
-  height:100%;
+  /* height:100%; */
   opacity:0;
   /* padding:5px; */
   background:#e1eaf4;
-  border: 4px solid white;
+  border: 2px solid white;
 
-  display:flex;
+  /* display:flex;
   align-items:center;
-  justify-content:center;
+  justify-content:center; */
 
 }
+
+
 
 .overlay-text {
   border-radius:5px;
