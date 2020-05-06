@@ -32,6 +32,7 @@ html, body{
   align-self:center;
   padding-top:20px;
   padding-bottom:50px;
+  align-items:center;
 }
 
 /* Unsized, grows to fit contents while maintaining border */
@@ -44,6 +45,17 @@ html, body{
   position:relative;
   padding:2px;
 }
+
+.project-card {
+  margin:60px;
+}
+
+/* Used in combination with my-card, restricts width to prevent odd behavior of carousel */
+.carousel-card {
+  max-width: 454px;
+  margin:60px;
+}
+
 
 .artwork-card-contents,.project-card-contents {
   display:block;
@@ -58,27 +70,16 @@ html, body{
 
 .project-card-contents {
   max-height:400px;
+  /* height:400px */
 }
 
 .contact-card {
-  width:100%;
   border: 2px solid white;
 }
 .contact-card-contents {
   height:300px;
   width:100%;
-  /* background: */
   padding:20px
-}
-
-.contact-container {
-  /* display:table;
-  background:#e1eaf4;
-  padding:20px;
-  padding-right:40px;
-  border-radius:5px;
-  border:2px solid white; */
-  /* margin-top:20px; */
 }
 
 .overlay {
@@ -89,7 +90,7 @@ html, body{
   width:100%;
   height:100%;
   background-color:white;
-  opacity:0;
+  opacity:0.0;
   padding:10px;
   display:table;
 }
@@ -102,12 +103,6 @@ html, body{
   width:100%;
   font-size: min(4vw,12px);
   text-align: center;
-}
-
-
-/* Used in combination with my-card, restricts width to prevent odd behavior of carousel */
-.carousel-card {
-  max-width:400px;
 }
 
 /* Changing color of default control icons to make up for light background */

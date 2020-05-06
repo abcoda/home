@@ -37,29 +37,35 @@
       <div class="content " id="projects">
         <div class="container-fluid">
           <div id="projects-container" class="row justify-content-center">
-            <div class="my-card carousel-card">
-              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/current.png" alt="First slide">
+            <!-- <div class="col-12-sm col-6-md"> -->
+              <div class="my-card carousel-card shadow-sm mb-4">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/current.png" alt="Current">
+                    </div>
+                    <div class="carousel-item active">
+                      <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/quote.gif" alt="Quote">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/sell.png" alt="Sell Stocks">
+                    </div>
+                    <div class="carousel-item">
+                      <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/history.png" alt="Transaction History">
+                    </div>
                   </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/sell.png" alt="Second slide">
-                  </div>
-                  <div class="carousel-item">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/history.png" alt="Third slide">
-                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span id="carousel-control-prev-icon" class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span id="carousel-control-next-icon" class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
                 </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                  <span id="carousel-control-prev-icon" class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                  <span id="carousel-control-next-icon" class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
+                <div class="overlay"><div class="overlay-text">fauxBear<br>View on <a href="#">GitHub</a><br></div></div>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
         </div>
       </div>
@@ -101,7 +107,7 @@
     window.onload = function() {
       createDrawings();
       createProjects();
-      createOverlays();
+      turnOnOverlays();
       toggleView('projects')
     }
 
@@ -112,10 +118,14 @@
 
     function createDrawings(){
       var str = ''
-      drawings.forEach(function(drawing) {
+      drawings.forEach(function(drawing,index) {
         str += '<div class="shadow-lg my-card mb-4">'
         if (drawing.video) {
-          str += '<video class="artwork-card-contents" controls autoplay loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
+          str += '<video class="artwork-card-contents" controls '
+          if (index === 0) {
+            str += 'autoplay '
+          }
+          str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
         }
         else {
           str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
@@ -135,12 +145,9 @@
     function createProjects(){
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
-        str += '<div class="col-12" align="center"><div class="shadow-sm my-card mb-4"><img class="project-card-contents" src="./projects/'
-        str += project.link
-        str += '"/><div class="textbox"><div class="overlay"><div class="overlay-text">'
-        str += project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>'
-
-        str += '</div></div></div></div></div>'
+        str += '<div class="shadow-sm my-card project-card mb-4"><img class="project-card-contents" src="./projects/' + project.link + '"/><div class="textbox">'
+        str += '<div class="overlay"><div class="overlay-text">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+        str += '</div></div>'
       })
       projs = document.getElementById("projects-container")
       projs.innerHTML = str;
@@ -163,16 +170,21 @@
     //   })
     // }
 
-    function createOverlays(){
+    function turnOnOverlays(){
       overlays = document.querySelectorAll(".overlay")
 
       overlays.forEach(function(overlay){
         overlay.onmouseover = () => {
-          overlay.style.opacity = 0.9
+          overlay.style.opacity = 0.95
         }
-        overlay.onclick = () => {
-          overlay.style.opacity = 0.9
-        }
+        // overlay.onclick = () => {
+        //   if (overlay.style.opacity === 0) {
+        //     overlay.style.opacity = 0.95
+        //   }
+        //   else {
+        //     overlay.style.opacity = 0
+        //   }
+        // }
         // overlay.onfocusout = () => {
         //   overlay.style.opacity = 0
         // }
@@ -223,6 +235,8 @@
       {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
       {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
       {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
+      {link:"small.png",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
+
     ]
 
     const projects = [
