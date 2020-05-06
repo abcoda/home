@@ -178,17 +178,16 @@
           overlay.style.opacity = 0
           overlay.children[0].style.visibility = "hidden"
         }
-        media.onclick = () => {
-          alert()
-          if (overlay.style.opacity == 0.9) {
-            overlay.style.opacity = 0
-            overlay.children[0].style.visibility = "hidden"
-          }
-          else {
-            overlay.style.opacity = 0.9
-            overlay.children[0].style.visibility = "visible"
-          }
-        }
+        // media.onclick = () => {
+        //   if (overlay.style.opacity == 0.9) {
+        //     overlay.style.opacity = 0
+        //     overlay.children[0].style.visibility = "hidden"
+        //   }
+        //   else {
+        //     overlay.style.opacity = 0.9
+        //     overlay.children[0].style.visibility = "visible"
+        //   }
+        // }
         // if (media.paused) {
         //   overlay.style.opacity = 0.9
         //   overlay.children[0].style.visibility = "visible"
@@ -222,7 +221,7 @@
     const drawings = [
       {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
 
-      {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", video:true},
+      {link:"einstein_vid.mkv", title:"Albert Einstein", medium:"White charcoal", video:true},
       // {link:"chance_vid.m4v", video:true},
       // {link:"kendrick_salt.m4v", video:true},
       // {link:"lana0.m4v", video:true},
