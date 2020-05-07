@@ -47,6 +47,8 @@
         <div class="container-fluid">
           <div id="projects-container" class="row justify-content-center">
             <div class="my-card carousel-card shadow-sm mb-4">
+              <div class="overlay carousel-overlay">test</div>
+
               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
@@ -71,7 +73,6 @@
                   <span class="sr-only">Next</span>
                 </a>
               </div>
-              <!-- <div class="overlay"><div class="overlay-text">fauxBear<br>View on <a href="#">GitHub</a><br></div></div> -->
             </div>
           </div>
         </div>
@@ -79,24 +80,7 @@
 
       <div class="content" id="artwork">
         <div class="container-fluid">
-          <div id="artwork-container" class="row justify-content-center">
-            <div class="my-card">
-              <div class="overlay">ffffffff</div>
-              <img class="artwork-card-contents" src="./artwork/index.png"/>
-              <!-- <div class="overlay-toggler"></div> -->
-            </div>
-            <div class="my-card">
-              <div class="overlay">ffffffff</div>
-              <img class="artwork-card-contents" src="./artwork/Outline2.jpg"/>
-              <!-- <div class="overlay-toggler"></div> -->
-            </div>
-            <div class="my-card">
-              <div class="overlay">ffffffff</div>
-              <video controls class="artwork-card-contents" src="./artwork/vids/einstein_vid.mkv"/>
-              <!-- <div class="overlay-toggler"></div> -->
-            </div>
-
-          </div>
+          <div id="artwork-container" class="row justify-content-center"></div>
         </div>
       </div>
 
@@ -128,40 +112,70 @@
   <script>
     window.onload = function() {
       toggleView('artwork')
-      // createDrawings();
-      // createProjects();
-      // turnOnOverlays();
-      $(".artwork-card-contents").hover(function(){
-        $(this.parentElement.children[0]).animate({height:"100%"},"400")
-      });
-      $(".artwork-card-contents").mouseleave(function(){
-        $(this.parentElement.children[0]).animate({height:"0"},"400")
-      });
+      createDrawings();
+      createProjects();
+      turnOnOverlays();
+
+      // if (hasTouch()) { // remove all the :hover stylesheets
+      //   try { // prevent exception on browsers not supporting DOM styleSheets properly
+      //     for (var si in document.styleSheets) {
+      //       var styleSheet = document.styleSheets[si];
+      //       if (!styleSheet.rules) continue;
+      //       for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
+      //         if (!styleSheet.rules[ri].selectorText) continue;
+      //         if (styleSheet.rules[ri].selectorText.match(':hover')) {
+      //           styleSheet.deleteRule(ri);
+      //         }
+      //       }
+      //     }
+      //   } catch (ex) {}
+      // }
+    }
+
+    // from https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices
+    // function hasTouch() {
+    //   return 'ontouchstart' in document.documentElement|| navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    // }
+
+    function showOverlay(card){
+      $(card).find(".overlay").stop(true);
+      // $(card).find(".overlay").css("display","flex")
+      $(card).find(".overlay").css("display","flex")
+
+      $(card).find(".overlay").animate({height:"100%"},200,"swing")
+    }
+
+    function hideOverlay(card){
+      $(card).find(".overlay").stop(true);
+      $(card).find(".overlay").animate({height:"0"},400,"swing",function(){$(card).find(".overlay").css("display","none")})
     }
 
     function createDrawings(){
       var str = ''
       firstVideo = true;
       drawings.forEach(function(drawing) {
-        str += '<div class="shadow-lg my-card mb-4"><div class="overlay"></div><div class="overlay-toggler"></div>'
+        str += '<div class="shadow-lg my-card mb-4">'
+
         if (drawing.video) {
           str += '<video class="artwork-card-contents" controls playsinline="true" '
           if (firstVideo) {
-            str += 'autoplay '
+            str += 'autoplay preload="none" '
             firstVideo = false
           }
-          str += 'loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
-          // str += '<div class="overlay" style="height:30%"><div class="overlay-text">'
+          str += 'poster="./artwork/posters/' + drawing.poster + '" loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
         }
         else {
-          str += '<img class="artwork-card-contents" src="./artwork/' + drawing.link + '"/>'
-          // str += '<div class="overlay"><div class="overlay-text">'
+          str += '<img class="artwork-card-contents" src="./artwork/small/' + drawing.link + '"/>'
         }
-        // str += drawing.title + '<br>' + drawing.medium + '<br>'
-        // if (drawing.info !== undefined){
-          // str += drawing.info
-        // }
-        // str += '</div></div>'
+        str += '<div class="overlay"><div class="overlay-contents">'
+        str += drawing.title + '<br>' + drawing.medium + '<br>'
+        if (drawing.info !== ""){
+          str += drawing.info + '<br>'
+        }
+        if (!(drawing.video)){
+          str += '<a href="./artwork/large/' + drawing.link + '">View full image</a>'
+        }
+        str += '</div></div>'
         str += '</div>'
       })
       pics = document.getElementById("artwork-container")
@@ -171,36 +185,30 @@
     function createProjects(){
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
-        str += '<div class="shadow-sm my-card project-card mb-4"><img class="project-card-contents" src="./projects/' + project.link + '"/><div class="textbox">'
-        // str += '<div class="overlay"><div class="overlay-text">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
-        // str += '</div></div>'
+        str += '<div class="shadow-sm my-card project-card mb-4">'
+        str += '<div class="overlay"><div class="overlay-contents">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+
+        str += '<img class="project-card-contents" src="./projects/' + project.link + '"/>'
+        str += '</div>'
       })
       projs = document.getElementById("projects-container")
       projs.innerHTML = str;
     }
 
     function turnOnOverlays(){
-      // $(".overlay-toggler").click(function(){
-      //   $(".overlay").slideDown("slow");
-      // });
-      // overlays = document.querySelectorAll(".overlay")
-      // // videoOverlays = document.querySelectorAll(".overlay-video")ov
-      //
-      // overlays.forEach(function(overlay){
-      //   parent = overlay.parentElement
-      //   media = parent.children[0]
-      //   media.onclick = () => {
-      //
-      //   }
-      //   media.onmouseover = overlay.onmouseover = () => {
-      //     overlay.style.opacity = 0.9
-      //     overlay.children[0].style.visibility = "visible"
-      //   }
-      //   media.onmouseout = overlay.onmouseout = () => {
-      //     overlay.style.opacity = 0
-      //     overlay.children[0].style.visibility = "hidden"
-      //   }
-      // })
+      $(".my-card").hover(function(){
+        showOverlay(this)
+      });
+      $(".my-card").mouseleave(function(){
+        hideOverlay(this)
+      });
+      $(".my-card").bind('touchstart', function(){
+        showOverlay(this)
+      });
+      $(".my-card").bind('touchend', function(){
+        hideOverlay(this)
+      });
+      // $(".controlsSpacer").css("z-index","1")
     }
 
 
@@ -227,28 +235,27 @@
     }
 
     const drawings = [
-      {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      {link:"nap.jpg",title:'"Napoleon"',medium:"Oil on panel", info:"", video:false},
 
-      // {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", video:true},
-      // {link:"chance_vid.m4v", video:true},
-      // {link:"kendrick_salt.m4v", video:true},
-      // {link:"lana0.m4v", video:true},
-      // {link:"pablo.m4v", video:true},
-      // {link:"kendrick.m4v", video:true},
-      // {link:"dan_vid.m4v", video:true},
-      // {link:"jack_white.m4v", video:true},
-      // {link:"regina.m4v", video:true},
-      // {link:"weeknd.m4v", video:true},
+      {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", info:"", video:true, poster:"einstein_vid.png"},
+      {link:"chance_vid.m4v", title:"Chance the Rapper", medium:"Charcoal", info:"", video:true, poster:"chance_vid.png"},
+      {link:"kendrick_salt.m4v", title:"Kendrick Lamar", medium:"Salt on paper", info:"", video:true, poster:"kendrick_salt.png"},
+      {link:"lana0.m4v", title:"Lana del Rey", medium:"Charcoal", info:"", video:true, poster:"lana0.png"},
+      {link:"pablo.m4v", title:"Wagner Moura (\"Narcos\")", medium:"Flour on paper", info:"", video:true, poster:"pablo.png"},
+      {link:"kendrick.m4v", title:"Kendrick Lamar", medium:"Charcoal", info:"", video:true, poster:"kendrick.png"},
+      {link:"dan_vid.m4v", title:"Dan Auerbach", medium:"Charcoal", info:"", video:true, poster:"dan_vid.png"},
+      {link:"jack_white.m4v", title:"Jack White", medium:"Salt on paper", info:"", video:true, poster:"jack_white.png"},
+      {link:"regina.m4v", title:"Regina Spektor", medium:"White charcoal", info:"Lyrics of \"Samson\"", video:true, poster:"regina.png"},
+      {link:"weeknd.m4v", title:"The Weeknd", medium:"Charcoal", info:"", video:true, poster:"weeknd.png"},
 
       // {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
-      // {link:'index.png',title:'"Alice"', medium:"Digital", info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
-      // {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
-      // {link:"small.png",title:'"Kip"', medium:"Digital", info:"Made in MS Paint"},
+      {link:'index.png',title:'"Alice"', medium:"Digital", video:false,info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint", video:false},
 
     ]
 
     const projects = [
-      {link:"productivity.gif", title:'"Productivity"', github:"https://github.com/abcoda/product", text:"Built with React Native"},
+      {link:"productivity.gif", title:"Productivity", github:"https://github.com/abcoda/product", text:"Built with React Native"},
       {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", text:"text"},
       {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto"}
     ]
