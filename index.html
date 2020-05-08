@@ -115,40 +115,58 @@
       createDrawings();
       createProjects();
       turnOnOverlays();
-
-      // if (hasTouch()) { // remove all the :hover stylesheets
-      //   try { // prevent exception on browsers not supporting DOM styleSheets properly
-      //     for (var si in document.styleSheets) {
-      //       var styleSheet = document.styleSheets[si];
-      //       if (!styleSheet.rules) continue;
-      //       for (var ri = styleSheet.rules.length - 1; ri >= 0; ri--) {
-      //         if (!styleSheet.rules[ri].selectorText) continue;
-      //         if (styleSheet.rules[ri].selectorText.match(':hover')) {
-      //           styleSheet.deleteRule(ri);
-      //         }
-      //       }
-      //     }
-      //   } catch (ex) {}
-      // }
     }
 
-    // from https://stackoverflow.com/questions/23885255/how-to-remove-ignore-hover-css-style-on-touch-devices
-    // function hasTouch() {
-    //   return 'ontouchstart' in document.documentElement|| navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
-    // }
+    function turnOnOverlays(){
+      $(".my-card").hover(function(){
+        showOverlay(this)
+      });
+      $(".my-card").mouseleave(function(){
+        hideOverlay(this)
+      });
+      $(".artwork-card-contents,.project-card-contents").bind('touchstart', function(){
+        card = this.parentElement
+        if (card.on){
+          hideOverlay(card)
+        }
+        else {
+          showOverlay(card)
+        }
+      });
+      $(".artwork-card-contents,.project-card-contents").bind('touchend', function(){
+        card = this.parentElement
+
+        if (card.on){
+        card.on = false
+        }
+        else {
+          card.on = true
+        }
+      });
+    }
 
     function showOverlay(card){
-      $(card).find(".overlay").stop(true);
+      this.on = true
+      $(card).find(".overlay-contents").stop(true);
       // $(card).find(".overlay").css("display","flex")
-      $(card).find(".overlay").css("display","flex")
+      $(card).find(".overlay-contents").animate({height:'show'},300,"swing")
+      // $(card).find(".overlay").animate({height:'show'},300,"swing")
 
-      $(card).find(".overlay").animate({height:"100%"},200,"swing")
+      $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'2px')
+      $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'2px')
     }
 
     function hideOverlay(card){
-      $(card).find(".overlay").stop(true);
-      $(card).find(".overlay").animate({height:"0"},400,"swing",function(){$(card).find(".overlay").css("display","none")})
+      this.on = false
+      $(card).find(".overlay-contents").stop(true);
+      $(card).find(".overlay-contents").animate({height:'hide'},300,"swing")
+      // $(card).find(".overlay").animate({height:'hide'},300,"swing",function(){$(card).find(".overlay").css("display","none")})
+
+      $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'4px')
+      $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'4px')
     }
+
+
 
     function createDrawings(){
       var str = ''
@@ -167,6 +185,7 @@
         else {
           str += '<img class="artwork-card-contents" src="./artwork/small/' + drawing.link + '"/>'
         }
+
         str += '<div class="overlay"><div class="overlay-contents">'
         str += drawing.title + '<br>' + drawing.medium + '<br>'
         if (drawing.info !== ""){
@@ -176,7 +195,9 @@
           str += '<a href="./artwork/large/' + drawing.link + '">View full image</a>'
         }
         str += '</div></div>'
+
         str += '</div>'
+
       })
       pics = document.getElementById("artwork-container")
       pics.innerHTML = str;
@@ -186,31 +207,15 @@
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
         str += '<div class="shadow-sm my-card project-card mb-4">'
-        str += '<div class="overlay"><div class="overlay-contents">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
 
         str += '<img class="project-card-contents" src="./projects/' + project.link + '"/>'
+        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+
         str += '</div>'
       })
       projs = document.getElementById("projects-container")
       projs.innerHTML = str;
     }
-
-    function turnOnOverlays(){
-      $(".my-card").hover(function(){
-        showOverlay(this)
-      });
-      $(".my-card").mouseleave(function(){
-        hideOverlay(this)
-      });
-      $(".my-card").bind('touchstart', function(){
-        showOverlay(this)
-      });
-      $(".my-card").bind('touchend', function(){
-        hideOverlay(this)
-      });
-      // $(".controlsSpacer").css("z-index","1")
-    }
-
 
     function toggleView(sectionID){
       sections = document.querySelectorAll(".content")
