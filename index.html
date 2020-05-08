@@ -9,14 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 
+    <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- <script>
-      $(document).ready(function(){
-        $(".overlay-toggler").click(function(){
-          $(".overlay").slideDown("slow");
-        });
-      });
-    </script> -->
 
     <title>Anthony Coda</title>
   </head>
@@ -46,22 +40,35 @@
       <div class="content " id="projects">
         <div class="container-fluid">
           <div id="projects-container" class="row justify-content-center">
-            <div class="my-card carousel-card shadow-sm mb-4">
-              <div class="overlay carousel-overlay">test</div>
-
-              <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="my-card carousel-card project-card shadow-sm ">
+              <div class="overlay project-overlay"><div class="overlay-contents">
+                fauxBear<br>Powered by Flask<br>View on <a href="https://github.com/abcoda/fauxBear">GitHub</a><br>
+              </div></div>
+              <div id="carouselExampleControls" class="carousel slide project-card-contents" data-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/current.png" alt="Current">
+                    <img class="d-block w-100" src="./projects/fauxBear/current.png" alt="Current">
+                    <div class="carousel-caption d-none d-md-block">
+                      <p class="caption-text">View current wealth distribution</p>
+                    </div>
                   </div>
                   <div class="carousel-item">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/quote.gif" alt="Quote">
+                    <img class="d-block w-100" src="./projects/fauxBear/quote.gif" alt="Quote">
+                    <div class="carousel-caption d-none d-md-block">
+                      <p class="caption-text">Get accurate, current stock prices. Provided with the IEX API</p>
+                    </div>
                   </div>
                   <div class="carousel-item">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/sell.png" alt="Sell Stocks">
+                    <img class="d-block w-100" src="./projects/fauxBear/sell.png" alt="Sell Stocks">
+                    <div class="carousel-caption d-none d-md-block">
+                      <p class="caption-text">Buy and sell (virtual) stocks</p>
+                    </div>
                   </div>
                   <div class="carousel-item">
-                    <img class="d-block w-100 project-card-contents" src="./projects/fauxBear/history.png" alt="Transaction History">
+                    <img class="d-block w-100" src="./projects/fauxBear/history.png" alt="Transaction History">
+                    <div class="carousel-caption d-none d-md-block">
+                      <p class="caption-text">View complete transaction history</p>
+                    </div>
                   </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -97,6 +104,16 @@
                 <a href="https://www.github.com/abcoda">GitHub</a>
               </div>
             </div>
+            <!-- <div class="my-card shadow-md contact-card">
+              <div class="contact-card-contents">
+                <div><h4>Commissions</h4></div>
+                <div>Standard charcoal portrait: $75 USD</div>
+                <div> +$50 per additional head</div>
+
+                <div>(717) 387-0906</div>
+                <div>San Marcos, TX</div>
+              </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -111,7 +128,7 @@
 
   <script>
     window.onload = function() {
-      toggleView('artwork')
+      toggleView('projects')
       createDrawings();
       createProjects();
       turnOnOverlays();
@@ -119,45 +136,41 @@
 
     function turnOnOverlays(){
       $(".my-card").hover(function(){
+        // console.log("hover")
         showOverlay(this)
       });
       $(".my-card").mouseleave(function(){
+        // console.log("mouseleave")
         hideOverlay(this)
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchstart', function(){
+        // console.log("touchstart")
         card = this.parentElement
-        if (card.on){
-          hideOverlay(card)
-        }
-        else {
-          showOverlay(card)
-        }
+        if (card.on){hideOverlay(card)}
+        else {showOverlay(card)}
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchend', function(){
+        // console.log("touchend")
         card = this.parentElement
-
-        if (card.on){
-        card.on = false
-        }
-        else {
-          card.on = true
-        }
+        card.on = !card.on
       });
+      // $("#carousel-control-next-icon").bind('touchstart',function(){
+      //   console.log("next")
+      //   hideOverlay(this.parentElement.parentElement)
+      // })
     }
 
     function showOverlay(card){
-      this.on = true
+      // alert(card)
+      // card.on = true
       $(card).find(".overlay-contents").stop(true);
-      // $(card).find(".overlay").css("display","flex")
       $(card).find(".overlay-contents").animate({height:'show'},300,"swing")
-      // $(card).find(".overlay").animate({height:'show'},300,"swing")
-
       $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'2px')
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'2px')
     }
 
     function hideOverlay(card){
-      this.on = false
+      // card.on = false
       $(card).find(".overlay-contents").stop(true);
       $(card).find(".overlay-contents").animate({height:'hide'},300,"swing")
       // $(card).find(".overlay").animate({height:'hide'},300,"swing",function(){$(card).find(".overlay").css("display","none")})
@@ -166,13 +179,11 @@
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'4px')
     }
 
-
-
     function createDrawings(){
       var str = ''
       firstVideo = true;
       drawings.forEach(function(drawing) {
-        str += '<div class="shadow-lg my-card mb-4">'
+        str += '<div class="block"><div class="shadow-lg my-card ">'
 
         if (drawing.video) {
           str += '<video class="artwork-card-contents" controls playsinline="true" '
@@ -196,7 +207,7 @@
         }
         str += '</div></div>'
 
-        str += '</div>'
+        str += '</div></div>'
 
       })
       pics = document.getElementById("artwork-container")
@@ -206,10 +217,10 @@
     function createProjects(){
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
-        str += '<div class="shadow-sm my-card project-card mb-4">'
+        str += '<div class="shadow-sm my-card project-card ">'
 
         str += '<img class="project-card-contents" src="./projects/' + project.link + '"/>'
-        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + (project.info == "" ? '' :'<br>'+ project.info) + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
 
         str += '</div>'
       })
@@ -240,29 +251,78 @@
     }
 
     const drawings = [
+      // {link:"",title:"",medium:"",info:"",video:false},
       {link:"nap.jpg",title:'"Napoleon"',medium:"Oil on panel", info:"", video:false},
-
       {link:"einstein_vid.m4v", title:"Albert Einstein", medium:"White charcoal", info:"", video:true, poster:"einstein_vid.png"},
-      {link:"chance_vid.m4v", title:"Chance the Rapper", medium:"Charcoal", info:"", video:true, poster:"chance_vid.png"},
-      {link:"kendrick_salt.m4v", title:"Kendrick Lamar", medium:"Salt on paper", info:"", video:true, poster:"kendrick_salt.png"},
-      {link:"lana0.m4v", title:"Lana del Rey", medium:"Charcoal", info:"", video:true, poster:"lana0.png"},
-      {link:"pablo.m4v", title:"Wagner Moura (\"Narcos\")", medium:"Flour on paper", info:"", video:true, poster:"pablo.png"},
-      {link:"kendrick.m4v", title:"Kendrick Lamar", medium:"Charcoal", info:"", video:true, poster:"kendrick.png"},
-      {link:"dan_vid.m4v", title:"Dan Auerbach", medium:"Charcoal", info:"", video:true, poster:"dan_vid.png"},
-      {link:"jack_white.m4v", title:"Jack White", medium:"Salt on paper", info:"", video:true, poster:"jack_white.png"},
+      {link:"anne.png",title:"Anne Hathaway",medium:"Charcoal",info:"",video:false},
+      {link:"willie.png",title:"Willie Nelson",medium:"White Charcoal",info:"",video:false},
       {link:"regina.m4v", title:"Regina Spektor", medium:"White charcoal", info:"Lyrics of \"Samson\"", video:true, poster:"regina.png"},
-      {link:"weeknd.m4v", title:"The Weeknd", medium:"Charcoal", info:"", video:true, poster:"weeknd.png"},
+      {link:"momT.png",title:"Mother Teresa",medium:"White Charcoal",info:"Greeting cards available",video:false},
 
-      // {link:"starry.jpg",title:'"Starry"',medium:"Digital",info:"Generated with <a href='https://www.deepdreamgenerator.com/'>DeepDream</a>"},
+      {link:"taylor.png",title:"Taylor Swift",medium:"Charcoal and Sharpie",info:"",video:false},
+      {link:"abe.jpg",title:"Lincoln",medium:"White Charoal",info:"The Gettysburg Address",video:false},
+
+      {link:"chance_vid.m4v", title:"Chance the Rapper", medium:"Charcoal", info:"", video:true, poster:"chance_vid.png"},
+      {link:"unfinished.jpg",title:"unfinished",medium:"White Charcoal",info:"",video:false},
+
+      {link:"kendrick_salt.m4v", title:"Kendrick Lamar", medium:"Salt on paper", info:"", video:true, poster:"kendrick_salt.png"},
+      {link:"george.png",title:"George Clooney",medium:"Created in MS Paint",info:"",video:false},
+      {link:"franc.png",title:"Francis Underwood",medium:"Charcoal",info:"",video:false},
+
+      {link:"lana0.m4v", title:"Lana del Rey", medium:"Charcoal", info:"", video:true, poster:"lana0.png"},
+      {link:"arya.jpg",title:"Arya Stark",medium:"Oil on Panel",info:"",video:false},
+
+      {link:"teddy.png",title:"Teddy Roosevelt",medium:"Charcoal",info:"",video:false},
+      {link:"walt.png",title:"Walter White",medium:"Black & White Charcoal",info:"",video:false},
+
+
+      {link:"pablo.m4v", title:"Wagner Moura (\"Narcos\")", medium:"Flour on paper", info:"", video:true, poster:"pablo.png"},
+      {link:"taylor0.png",title:"Taylor Swift",medium:"Charcoal",info:"",video:false},
+
+      {link:"kendrick.m4v", title:"Kendrick Lamar", medium:"Charcoal", info:"", video:true, poster:"kendrick.png"},
+      {link:"sean.png",title:"Sean Bean",medium:"Charcoal",info:"",video:false},
+      {link:"mm.png",title:"Marshall Mathers",medium:"Dry Erase",info:"",video:false},
+
+      {link:"dan_vid.m4v", title:"Dan Auerbach", medium:"Charcoal", info:"", video:true, poster:"dan_vid.png"},
+      {link:"iron.png",title:"Sam Beam",medium:"Watercolor & Charcoal",info:"",video:false},
+      {link:"john.png",title:"John Lennon",medium:"Black & White Charcoal",info:"",video:false},
+      {link:"johnny.png",title:"Johnny Cash",medium:"Charcoal",info:"",video:false},
+
+      {link:"iron0.png",title:"Sam Beam",medium:"Charcoal",info:"",video:false},
+
+      {link:"jack_white.m4v", title:"Jack White", medium:"Salt on paper", info:"", video:true, poster:"jack_white.png"},
+      {link:"marla.png",title:"Marla (\"Fight Club\")",medium:"Charcoal",info:"",video:false},
+      {link:"jimmy.png",title:"Jimi Hendrix",medium:"White Charcoal",info:"Lyrics: \"May This Be Love\"",video:false},
+      {link:"char.png",title:"Charlize Theron",medium:"Charcoal",info:"",video:false},
+
+      {link:"house.png",title:"Dr. House",medium:"Charcoal",info:"",video:false},
+
+      {link:"weeknd.m4v", title:"The Weeknd", medium:"Charcoal", info:"", video:true, poster:"weeknd.png"},
+      {link:"dove.png",title:"Robert Plant",medium:"Charcoal",info:"",video:false},
+      {link:"cosette.png",title:"Cosette",medium:"Colored Pencils",info:"",video:false},
+
+      {link:"harry.png",title:"Harry Potter",medium:"White Charcoal",info:"",video:false},
+
       {link:'index.png',title:'"Alice"', medium:"Digital", video:false,info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      {link:"godfather.png",title:"Vito Corleone",medium:"White Charcoal",info:"",video:false},
+      {link:"adele.png",title:"Adele",medium:"Black & White Charcoal",info:"",video:false},
+
       {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint", video:false},
+      {link:"jlaw.png",title:"Jennifer Lawrence",medium:"Charcoal",info:"",video:false},
+      {link:"mike.png",title:"Mike",medium:"Ballpoint Pen",info:"",video:false},
+      {link:"al.png",title:"Al Capone",medium:"Sharpie",info:"",video:false},
+
+      {link:"rick.png",title:"Rick Grimes",medium:"Watercolor & Charcoal",info:"",video:false},
+      {link:"page.png",title:"Jimmy Page",medium:"Charcoal",info:"",video:false},
+      {link:"jm.png",title:"John Muir",medium:"Charcoal",info:"",video:false},
 
     ]
 
     const projects = [
-      {link:"productivity.gif", title:"Productivity", github:"https://github.com/abcoda/product", text:"Built with React Native"},
-      {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", text:"text"},
-      {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto"}
+      {link:"productivity.gif", title:"Productivity", github:"https://github.com/abcoda/product", info:"Built with React Native <br> for Android, iOS, and web"},
+      {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto", info:"Pixelate images, restrict to specified color palettes, <br>and generate \"Paint by number\" grids"},
+      {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", info:""},
+      {link:"pomodoro.gif", title:"Pomodoro Timer", github:"https://github.com/abcoda/pomodoro", info:"Built with React Native"}
     ]
   </script>
 </html>
