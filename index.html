@@ -24,13 +24,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item" onclick="toggleView('projects')">
-            <a id="projects-link" class="nav-link" href="#">Projects</a>
+            <span id="projects-link" class="nav-link">Projects</span>
           </li>
           <li class="nav-item" onclick="toggleView('artwork')">
-            <a id="artwork-link" class="nav-link" href="#">Artwork</a>
+            <span id="artwork-link" class="nav-link">Artwork</span>
           </li>
           <li class="nav-item" onclick="toggleView('contact')">
-            <a id="contact-link" class="nav-link" href="#">Contact</a>
+            <span id="contact-link" class="nav-link">Contact</span>
           </li>
         </ul>
       </div>
@@ -101,17 +101,14 @@
                 <div>(717) 387-0906</div>
                 <div>San Marcos, TX</div>
                 <br>
-                <a href="https://www.github.com/abcoda">GitHub</a>
+                <a target="_blank" rel="noopener noreferrer" href="https://www.github.com/abcoda">GitHub</a>
               </div>
             </div>
             <!-- <div class="my-card shadow-md contact-card">
               <div class="contact-card-contents">
                 <div><h4>Commissions</h4></div>
                 <div>Standard charcoal portrait: $75 USD</div>
-                <div> +$50 per additional head</div>
-
-                <div>(717) 387-0906</div>
-                <div>San Marcos, TX</div>
+                <div> +$50 per additional head</div>s
               </div>
             </div> -->
           </div>
@@ -128,10 +125,17 @@
 
   <script>
     window.onload = function() {
-      toggleView('projects')
+      page = getParameterByName('page')
+      if (page) toggleView(page)
+      else toggleView('projects')
       createDrawings();
       createProjects();
       turnOnOverlays();
+
+
+      window.onpopstate = e => {
+        toggleView(e.state.page, back=true)
+      }
     }
 
     function turnOnOverlays(){
@@ -203,7 +207,7 @@
           str += drawing.info + '<br>'
         }
         if (!(drawing.video)){
-          str += '<a href="./artwork/large/' + drawing.link + '">View full image</a>'
+          str += '<a target="_blank" rel="noopener noreferrer" href="./artwork/large/' + drawing.link + '">View full image</a>'
         }
         str += '</div></div>'
 
@@ -220,7 +224,7 @@
         str += '<div class="shadow-sm my-card project-card ">'
 
         str += '<img class="project-card-contents" src="./projects/' + project.link + '"/>'
-        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + (project.info == "" ? '' :'<br>'+ project.info) + '<br>View on <a href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
+        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + (project.info == "" ? '' :'<br>'+ project.info) + '<br>View on <a target="_blank" rel="noopener noreferrer" href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
 
         str += '</div>'
       })
@@ -228,7 +232,18 @@
       projs.innerHTML = str;
     }
 
-    function toggleView(sectionID){
+// from https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    function toggleView(sectionID, back=false){
       sections = document.querySelectorAll(".content")
       for(let i = 0; i < sections.length; i++) {
         if (sections[i].id == sectionID) {
@@ -248,6 +263,16 @@
           document.getElementById(link.id).style.textDecoration = 'none'
         }
       })
+
+      if (!back) {
+        history.pushState({'page': sectionID}, sectionID, `?page=${sectionID}`)
+        // console.log(`pushed ${sectionID}`)
+        // console.log(history)
+      }
+      // history.pushState({'page': sectionID}, sectionID, `?page=${sectionID}`)
+      // console.log(`pushed ${sectionID}`)
+      // // console.log(history)
+
     }
 
     const drawings = [
@@ -303,7 +328,7 @@
 
       {link:"harry.png",title:"Harry Potter",medium:"White Charcoal",info:"",video:false},
 
-      {link:'index.png',title:'"Alice"', medium:"Digital", video:false,info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>"},
+      {link:'index.png',title:'"Alice"', medium:"Digital", video:false,info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html' target='_blank' rel='noopener noreferrer'>ShopPhoto</a>"},
       {link:"godfather.png",title:"Vito Corleone",medium:"White Charcoal",info:"",video:false},
       {link:"adele.png",title:"Adele",medium:"Black & White Charcoal",info:"",video:false},
 
@@ -320,7 +345,7 @@
 
     const projects = [
       {link:"productivity.gif", title:"Productivity", github:"https://github.com/abcoda/product", info:"Built with React Native <br> for Android, iOS, and web"},
-      {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto", info:"Pixelate images, restrict to specified color palettes, <br>and generate \"Paint by number\" grids"},
+      {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'target='_blank' rel='noopener noreferrer'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto", info:"Pixelate images, restrict to specified color palettes, <br>and generate \"Paint by number\" grids"},
       {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", info:""},
       {link:"pomodoro.gif", title:"Pomodoro Timer", github:"https://github.com/abcoda/pomodoro", info:"Built with React Native"}
     ]

@@ -2,10 +2,9 @@ html, body{
   height:100%;
 }
 
-/* .container-fluid {
-  padding-left:0px !important;
-  padding-right:0px !important;
-} */
+.navbar-nav li:hover {
+  cursor:pointer;
+}
 
 .navbar {
   background-color:#e1eaf4;
@@ -23,7 +22,7 @@ html, body{
 }
 
 #artwork-link:hover, #contact-link:hover, #projects-link:hover {
-  color: rgba(0,0,0,0.5)
+  color: rgba(0,0,0,0.5);
 }
 
 #main {
@@ -65,7 +64,8 @@ html, body{
 .project-card {
   margin-bottom:60px;
   margin-top:60px;
-
+  margin-left:60px;
+  margin-right:60px;
 }
 
 /* Used in combination with my-card, restricts width to prevent odd behavior of carousel */
