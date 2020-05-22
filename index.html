@@ -1,12 +1,13 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags ... test-->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+
+    <!-- My CSS -->
     <link rel="stylesheet" type="text/css" href="./styles.css" />
 
     <!-- jQuery -->
@@ -114,24 +115,25 @@
           </div>
         </div>
       </div>
+      <div id="error"></div>
     </div>
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   </body>
 
   <script>
     window.onload = function() {
-      page = getParameterByName('page')
+      const urlParams = new URLSearchParams(window.location.search);
+      const page = urlParams.get('page');
       if (page) toggleView(page)
       else toggleView('projects')
+
       createDrawings();
       createProjects();
       turnOnOverlays();
-
 
       window.onpopstate = e => {
         toggleView(e.state.page, back=true)
@@ -140,44 +142,33 @@
 
     function turnOnOverlays(){
       $(".my-card").hover(function(){
-        // console.log("hover")
         showOverlay(this)
       });
       $(".my-card").mouseleave(function(){
-        // console.log("mouseleave")
         hideOverlay(this)
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchstart', function(){
-        // console.log("touchstart")
         card = this.parentElement
         if (card.on){hideOverlay(card)}
         else {showOverlay(card)}
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchend', function(){
-        // console.log("touchend")
         card = this.parentElement
         card.on = !card.on
       });
-      // $("#carousel-control-next-icon").bind('touchstart',function(){
-      //   console.log("next")
-      //   hideOverlay(this.parentElement.parentElement)
-      // })
     }
 
     function showOverlay(card){
-      // alert(card)
-      // card.on = true
       $(card).find(".overlay-contents").stop(true);
       $(card).find(".overlay-contents").animate({height:'show'},300,"swing")
+
       $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'2px')
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'2px')
     }
 
     function hideOverlay(card){
-      // card.on = false
       $(card).find(".overlay-contents").stop(true);
       $(card).find(".overlay-contents").animate({height:'hide'},300,"swing")
-      // $(card).find(".overlay").animate({height:'hide'},300,"swing",function(){$(card).find(".overlay").css("display","none")})
 
       $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'4px')
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'4px')
@@ -188,72 +179,57 @@
       firstVideo = true;
       drawings.forEach(function(drawing) {
         str += '<div class="block"><div class="shadow-lg my-card ">'
-
-        if (drawing.video) {
-          str += '<video class="artwork-card-contents" controls playsinline="true" '
-          if (firstVideo) {
-            str += 'autoplay preload="none" '
+          if (drawing.video) {
+            str += `<video class="artwork-card-contents" ${firstVideo ? 'autoplay ' : ''} controls preload="none" playsinline="true" `
+            str += `poster="./artwork/posters/${drawing.poster}" loop><source src="./artwork/vids/${drawing.link}" type="video/mp4"></video>`
             firstVideo = false
           }
-          str += 'poster="./artwork/posters/' + drawing.poster + '" loop><source src="./artwork/vids/' + drawing.link + '" type="video/mp4"></video>'
-        }
-        else {
-          str += '<img class="artwork-card-contents" src="./artwork/small/' + drawing.link + '"/>'
-        }
-
-        str += '<div class="overlay"><div class="overlay-contents">'
-        str += drawing.title + '<br>' + drawing.medium + '<br>'
-        if (drawing.info !== ""){
-          str += drawing.info + '<br>'
-        }
-        if (!(drawing.video)){
-          str += '<a target="_blank" rel="noopener noreferrer" href="./artwork/large/' + drawing.link + '">View full image</a>'
-        }
-        str += '</div></div>'
-
+          else {
+            str += `<img class="artwork-card-contents" src="./artwork/small/${drawing.link}"/>`
+          }
+          str += '<div class="overlay"><div class="overlay-contents">'
+            str += `${drawing.title}<br>${drawing.medium}<br>${(drawing.info == "" ? '' : drawing.info + '<br>')}`
+            str += `${(drawing.video ? "" : `<a target="_blank" rel="noopener noreferrer" href="./artwork/large/${drawing.link}">View full image</a>`)}`
+          str += '</div></div>'
         str += '</div></div>'
 
       })
-      pics = document.getElementById("artwork-container")
-      pics.innerHTML = str;
+      document.getElementById("artwork-container").innerHTML = str;
     }
 
     function createProjects(){
       var str = document.getElementById("projects-container").innerHTML
       projects.forEach(function(project) {
         str += '<div class="shadow-sm my-card project-card ">'
-
-        str += '<img class="project-card-contents" src="./projects/' + project.link + '"/>'
-        str += '<div class="overlay project-overlay"><div class="overlay-contents">' + project.title + (project.info == "" ? '' :'<br>'+ project.info) + '<br>View on <a target="_blank" rel="noopener noreferrer" href="' +  project.github + '">GitHub</a><br>' + '</div></div>'
-
+          str += `<img class="project-card-contents" src="./projects/${project.link}"/>`
+          str += `<div class="overlay project-overlay"><div class="overlay-contents">${project.title}${(project.info == "" ? '' :'<br>'+ project.info)}<br>View on <a target="_blank" rel="noopener noreferrer" href="${project.github}">GitHub</a><br></div></div>`
         str += '</div>'
       })
-      projs = document.getElementById("projects-container")
-      projs.innerHTML = str;
-    }
-
-// from https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
-    function getParameterByName(name, url) {
-        if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+      document.getElementById("projects-container").innerHTML = str
     }
 
     function toggleView(sectionID, back=false){
+      // display only the selected section
+      found = false
       sections = document.querySelectorAll(".content")
       for(let i = 0; i < sections.length; i++) {
         if (sections[i].id == sectionID) {
           sections[i].style.display = 'inline'
+          found = true
         }
         else {
           sections[i].style.display ='none'
         }
       }
+      if (!(found)) {
+        document.getElementById('error').innerHTML = '<div>wat r u doin</div>'
+      }
+      else {
+        document.getElementById('error').innerHTML = ''
 
+      }
+
+      // underline the current section in the navbar
       links = document.querySelectorAll(".nav-link")
       links.forEach(function(link){
         if (link.id == (sectionID + '-link')) {
@@ -264,15 +240,10 @@
         }
       })
 
+      // add page to history stack, unless the page was reached by pressing the browser back button
       if (!back) {
         history.pushState({'page': sectionID}, sectionID, `?page=${sectionID}`)
-        // console.log(`pushed ${sectionID}`)
-        // console.log(history)
       }
-      // history.pushState({'page': sectionID}, sectionID, `?page=${sectionID}`)
-      // console.log(`pushed ${sectionID}`)
-      // // console.log(history)
-
     }
 
     const drawings = [
@@ -283,71 +254,57 @@
       {link:"willie.png",title:"Willie Nelson",medium:"White Charcoal",info:"",video:false},
       {link:"regina.m4v", title:"Regina Spektor", medium:"White charcoal", info:"Lyrics of \"Samson\"", video:true, poster:"regina.png"},
       {link:"momT.png",title:"Mother Teresa",medium:"White Charcoal",info:"Greeting cards available",video:false},
-
       {link:"taylor.png",title:"Taylor Swift",medium:"Charcoal and Sharpie",info:"",video:false},
       {link:"abe.jpg",title:"Lincoln",medium:"White Charoal",info:"The Gettysburg Address",video:false},
-
       {link:"chance_vid.m4v", title:"Chance the Rapper", medium:"Charcoal", info:"", video:true, poster:"chance_vid.png"},
       {link:"unfinished.jpg",title:"unfinished",medium:"White Charcoal",info:"",video:false},
-
       {link:"kendrick_salt.m4v", title:"Kendrick Lamar", medium:"Salt on paper", info:"", video:true, poster:"kendrick_salt.png"},
       {link:"george.png",title:"George Clooney",medium:"Created in MS Paint",info:"",video:false},
       {link:"franc.png",title:"Francis Underwood",medium:"Charcoal",info:"",video:false},
-
       {link:"lana0.m4v", title:"Lana del Rey", medium:"Charcoal", info:"", video:true, poster:"lana0.png"},
       {link:"arya.jpg",title:"Arya Stark",medium:"Oil on Panel",info:"",video:false},
-
       {link:"teddy.png",title:"Teddy Roosevelt",medium:"Charcoal",info:"",video:false},
       {link:"walt.png",title:"Walter White",medium:"Black & White Charcoal",info:"",video:false},
-
-
       {link:"pablo.m4v", title:"Wagner Moura (\"Narcos\")", medium:"Flour on paper", info:"", video:true, poster:"pablo.png"},
       {link:"taylor0.png",title:"Taylor Swift",medium:"Charcoal",info:"",video:false},
-
       {link:"kendrick.m4v", title:"Kendrick Lamar", medium:"Charcoal", info:"", video:true, poster:"kendrick.png"},
       {link:"sean.png",title:"Sean Bean",medium:"Charcoal",info:"",video:false},
       {link:"mm.png",title:"Marshall Mathers",medium:"Dry Erase",info:"",video:false},
-
       {link:"dan_vid.m4v", title:"Dan Auerbach", medium:"Charcoal", info:"", video:true, poster:"dan_vid.png"},
       {link:"iron.png",title:"Sam Beam",medium:"Watercolor & Charcoal",info:"",video:false},
       {link:"john.png",title:"John Lennon",medium:"Black & White Charcoal",info:"",video:false},
       {link:"johnny.png",title:"Johnny Cash",medium:"Charcoal",info:"",video:false},
-
       {link:"iron0.png",title:"Sam Beam",medium:"Charcoal",info:"",video:false},
-
       {link:"jack_white.m4v", title:"Jack White", medium:"Salt on paper", info:"", video:true, poster:"jack_white.png"},
       {link:"marla.png",title:"Marla (\"Fight Club\")",medium:"Charcoal",info:"",video:false},
       {link:"jimmy.png",title:"Jimi Hendrix",medium:"White Charcoal",info:"Lyrics: \"May This Be Love\"",video:false},
       {link:"char.png",title:"Charlize Theron",medium:"Charcoal",info:"",video:false},
-
       {link:"house.png",title:"Dr. House",medium:"Charcoal",info:"",video:false},
-
       {link:"weeknd.m4v", title:"The Weeknd", medium:"Charcoal", info:"", video:true, poster:"weeknd.png"},
       {link:"dove.png",title:"Robert Plant",medium:"Charcoal",info:"",video:false},
       {link:"cosette.png",title:"Cosette",medium:"Colored Pencils",info:"",video:false},
-
       {link:"harry.png",title:"Harry Potter",medium:"White Charcoal",info:"",video:false},
-
       {link:'index.png',title:'"Alice"', medium:"Digital", video:false,info: "Created with <a href='https://abcoda.github.io/ShopPhoto/templates/index.html' target='_blank' rel='noopener noreferrer'>ShopPhoto</a>"},
       {link:"godfather.png",title:"Vito Corleone",medium:"White Charcoal",info:"",video:false},
       {link:"adele.png",title:"Adele",medium:"Black & White Charcoal",info:"",video:false},
-
       {link:"Outline2.jpg",title:'"Kip"', medium:"Digital", info:"Made in MS Paint", video:false},
       {link:"jlaw.png",title:"Jennifer Lawrence",medium:"Charcoal",info:"",video:false},
       {link:"mike.png",title:"Mike",medium:"Ballpoint Pen",info:"",video:false},
       {link:"al.png",title:"Al Capone",medium:"Sharpie",info:"",video:false},
-
       {link:"rick.png",title:"Rick Grimes",medium:"Watercolor & Charcoal",info:"",video:false},
       {link:"page.png",title:"Jimmy Page",medium:"Charcoal",info:"",video:false},
       {link:"jm.png",title:"John Muir",medium:"Charcoal",info:"",video:false},
-
     ]
 
     const projects = [
+      {link:"seinfeld.gif", title:"<a href='#' target='_blank' rel='noopener noreferrer'>Seinfeld Analysis</a>", github:"https://github.com/abcoda/lines", info:"Customizable and responsive analysis of Seinfeld scripts<br>Powered by Flask"},
+      {link:"board.gif", title:"<a href='https://boardtodeath.herokuapp.com' target='_blank' rel='noopener noreferrer'>Board to Death</a>", github:"https://github.com/abcoda/board", info:"Whiteboard-style cross-platform chatroom<br>Powered by Flask and socketIO"},
       {link:"productivity.gif", title:"Productivity", github:"https://github.com/abcoda/product", info:"Built with React Native <br> for Android, iOS, and web"},
       {link:"rolled.gif", title:"<a href='https://abcoda.github.io/ShopPhoto/templates/index.html'target='_blank' rel='noopener noreferrer'>ShopPhoto</a>", github:"https://github.com/abcoda/ShopPhoto", info:"Pixelate images, restrict to specified color palettes, <br>and generate \"Paint by number\" grids"},
       {link:"slither.gif", title:"SlitherLink AI", github:"https://github.com/abcoda/slitherlink", info:""},
       {link:"pomodoro.gif", title:"Pomodoro Timer", github:"https://github.com/abcoda/pomodoro", info:"Built with React Native"}
     ]
+
+    const pages = ['projects', 'artwork', 'contact']
   </script>
 </html>
