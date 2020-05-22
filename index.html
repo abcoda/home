@@ -141,20 +141,32 @@
     }
 
     function turnOnOverlays(){
-      $(".my-card").hover(function(){
-        showOverlay(this)
+      $(".my-card").each(function(){
+        this.ready = true
+      })
+
+      $(".my-card").bind('touchmove', function() {
+        this.ready = false
+      })
+      $(".my-card").mouseenter(function(){
+        if (!this.on) {
+          showOverlay(this)
+        }
       });
       $(".my-card").mouseleave(function(){
-        hideOverlay(this)
-      });
-      $(".artwork-card-contents,.project-card-contents").bind('touchstart', function(){
-        card = this.parentElement
-        if (card.on){hideOverlay(card)}
-        else {showOverlay(card)}
+        if (this.on) {
+          hideOverlay(this)
+        }
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchend', function(){
         card = this.parentElement
-        card.on = !card.on
+        if (card.ready){
+          if (card.on) hideOverlay(card)
+          else showOverlay(card)
+        }
+        else {
+          card.ready = true
+        }
       });
     }
 
@@ -164,6 +176,7 @@
 
       $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'2px')
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'2px')
+      card.on = true
     }
 
     function hideOverlay(card){
@@ -172,6 +185,7 @@
 
       $(card).find(".artwork-card-contents").css("border-bottom-left-radius",'4px')
       $(card).find(".artwork-card-contents").css("border-bottom-right-radius",'4px')
+      card.on = false;
     }
 
     function createDrawings(){
@@ -180,7 +194,7 @@
       drawings.forEach(function(drawing) {
         str += '<div class="block"><div class="shadow-lg my-card ">'
           if (drawing.video) {
-            str += `<video class="artwork-card-contents" ${firstVideo ? 'autoplay ' : ''} controls preload="none" playsinline="true" `
+            str += `<video class="artwork-card-contents" ${firstVideo ? 'autoplay ' : ''} controls muted preload="none" playsinline="true" `
             str += `poster="./artwork/posters/${drawing.poster}" loop><source src="./artwork/vids/${drawing.link}" type="video/mp4"></video>`
             firstVideo = false
           }
