@@ -63,10 +63,10 @@ html, body{
 }
 
 .project-card {
-  margin-bottom:60px;
+  margin-bottom:20px;
   margin-top:60px;
-  margin-left:60px;
-  margin-right:60px;
+  margin-left:5vw;
+  margin-right:5vw;
 }
 
 /* Used in combination with my-card, restricts width to prevent odd behavior of carousel */
