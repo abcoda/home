@@ -126,6 +126,9 @@
 
   <script>
     window.onload = function() {
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        var touch = true
+      }
       const urlParams = new URLSearchParams(window.location.search);
       const page = urlParams.get('page');
       if (page) toggleView(page)
@@ -159,15 +162,30 @@
         }
       });
       $(".artwork-card-contents,.project-card-contents").bind('touchend', function(){
+        // console.log($(this).prop('nodeName'));
         card = this.parentElement
         if (card.ready){
-          if (card.on) hideOverlay(card)
-          else showOverlay(card)
+          if ($(this).is("video")) {
+            if (!card.on) showOverlay(card)
+          }
+          else {
+            if (card.on) hideOverlay(card)
+            else showOverlay(card)
+          }
+          // if (card.on) hideOverlay(card)
+          // else showOverlay(card)
+
         }
         else {
           card.ready = true
         }
       });
+      // $('html').click(function(e) {
+      //   //if clicked element is not your element and parents aren't your div
+      //   if (e.target.id != 'your-div-id' && $(e.target).parents('#your-div-id').length == 0) {
+      //     //do stuff
+      //   }
+      // });
     }
 
     function showOverlay(card){
@@ -195,6 +213,7 @@
         str += '<div class="block"><div class="shadow-lg my-card ">'
           if (drawing.video) {
             str += `<video class="artwork-card-contents" ${firstVideo ? 'autoplay ' : ''} controls muted preload="none" playsinline="true" `
+            // str += `<video class="artwork-card-contents" muted preload="none" playsinline="true" `
             str += `poster="./artwork/posters/${drawing.poster}" loop><source src="./artwork/vids/${drawing.link}" type="video/mp4"></video>`
             firstVideo = false
           }
