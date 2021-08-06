@@ -19,8 +19,8 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-light">
-    <div class="navbar-brand" id="brand">abcoda</div>
+  <nav class="navbar sticky-top navbar-expand-md navbar-light">
+    <div class="navbar-brand" id="brand">abcoda<img id='navbar-icon' src='icon.png'></div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -34,9 +34,9 @@
         <li class="nav-item" onclick="toggleView('artwork')">
           <span id="artwork-link" class="nav-link">Artwork</span>
         </li>
-        <li class="nav-item" onclick="toggleView('contact')">
+        <!-- <li class="nav-item" onclick="toggleView('contact')">
           <span id="contact-link" class="nav-link">Contact</span>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>
@@ -284,10 +284,14 @@
     links = document.querySelectorAll(".nav-link")
     links.forEach(function (link) {
       if (link.id == (sectionID + '-link')) {
-        document.getElementById(link.id).style.textDecoration = 'underline'
+        document.getElementById(link.id).style.borderBottom = '1px solid #8394aa'
+        document.getElementById(link.id).style.borderTop = '1px solid #8394aa'
+
       }
       else {
-        document.getElementById(link.id).style.textDecoration = 'none'
+        document.getElementById(link.id).style.borderBottom = 'none'
+        document.getElementById(link.id).style.borderTop = 'none'
+
       }
     })
 
